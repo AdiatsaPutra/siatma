@@ -5,6 +5,7 @@ class AddReminderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final addReminder = context.read<AddReminderCubit>();
     return Scaffold(
       appBar: AppBar(title: const Text('Add pill')),
       body: Padding(
@@ -36,15 +37,30 @@ class AddReminderPage extends StatelessWidget {
                 activeTrackColor: kPrimaryColor,
                 trackShape: SliderCustomTrackShape(),
               ),
-              child: Slider(
-                value: 50,
-                max: 100,
-                onChanged: (v) {},
+              child: BlocBuilder<AddReminderCubit, AddReminderState>(
+                builder: (context, state) {
+                  return Slider(
+                    value: addReminder.week,
+                    max: 100,
+                    min: 1,
+                    onChanged: (v) {
+                      addReminder.setWeek(v);
+                    },
+                  );
+                },
               ),
             ),
-            const Align(
+            Align(
               alignment: Alignment.centerRight,
-              child: Text('1 week'),
+              child: BlocBuilder<AddReminderCubit, AddReminderState>(
+                builder: (context, state) => addReminder.week.round() > 1
+                    ? Text(
+                        '${addReminder.week.round()} weeks',
+                      )
+                    : Text(
+                        '${addReminder.week.round()} week',
+                      ),
+              ),
             ),
             kMediumVerticalSpacing,
 
@@ -79,20 +95,32 @@ class AddReminderPage extends StatelessWidget {
                 children: [
                   ...List.generate(
                     5,
-                    (index) => Container(
-                      width: 100,
-                      height: 50,
-                      margin: const EdgeInsets.fromLTRB(0, 16, 10, 16),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 1,
-                              spreadRadius: 3,
-                              color: Colors.grey[200]!,
-                            )
-                          ]),
+                    (index) => BlocBuilder<AddReminderCubit, AddReminderState>(
+                      builder: (context, state) {
+                        return GestureDetector(
+                          onTap: () {
+                            addReminder.setCategory(index);
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            margin: const EdgeInsets.fromLTRB(0, 16, 10, 16),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border: addReminder.selectedCategory == index
+                                    ? Border.all(color: kPrimaryColor, width: 2)
+                                    : null,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 1,
+                                    spreadRadius: 3,
+                                    color: Colors.grey[200]!,
+                                  )
+                                ]),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
