@@ -1,12 +1,20 @@
 part of 'pages.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController(text: "");
+    final _formKey = GlobalKey<FormState>();
     final user = context.read<UserCubit>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -27,7 +35,7 @@ class LoginPage extends StatelessWidget {
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                //  padding: const EdgeInsets.symmetric(horizontal: 20),
                 width: MediaQuery.of(context).size.width,
                 height: 3 * MediaQuery.of(context).size.height / 5,
                 color: Colors.white,
@@ -37,20 +45,31 @@ class LoginPage extends StatelessWidget {
                     kBiggestVerticalSpacing,
 
                     ///
-                    Text('Masuk/Daftar', style: kBodyTextBold),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text('Masuk/Daftar', style: kBodyTextBold),
+                    ),
                     kBigVerticalSpacing,
 
                     ///
                     CustomTextField(
                       controller: user.name,
-                      hintText: 'Name',
+                      labelText: 'Name',
+                      hintText: 'John',
                     ),
                     kMediumVerticalSpacing,
 
                     ///
                     CustomTextField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
                       controller: user.password,
-                      hintText: 'Password',
+                      labelText: 'Password',
+                      hintText: 'Minimum 6 Digits',
                     ),
                     kMediumVerticalSpacing,
 
@@ -73,8 +92,14 @@ class LoginPage extends StatelessWidget {
                         ),
                         orElse: () => CustomButton(
                           child: const Text('Simpan'),
-                          onTap: () {
+                          onTap:
+                              // user.password.text.isEmpty
+                              //     ?  () {}
+                              //     :
+                              () {
+                            // if (_formKey.currentState!.validate()) {
                             user.login();
+                            //  }
                           },
                         ),
                       ),

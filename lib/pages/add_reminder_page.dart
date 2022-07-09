@@ -8,98 +8,123 @@ class AddReminderPage extends StatelessWidget {
     final addReminder = context.read<AddReminderCubit>();
     return Scaffold(
       appBar: AppBar(title: const Text('Add pill')),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ListView(
-          children: [
-            kBigVerticalSpacing,
+      body: ListView(
+        children: [
+          kBigVerticalSpacing,
 
-            ///
-            CustomTextField(
-              controller: TextEditingController(),
-              hintText: 'Pill name',
-            ),
-            kMediumVerticalSpacing,
+          ///
+          CustomTextField(
+            controller: TextEditingController(),
+            labelText: 'Pill name',
+            hintText: 'eg: Pil KB',
+          ),
+          kMediumVerticalSpacing,
 
-            ///
-            CustomTextField(
-              controller: TextEditingController(),
-              hintText: 'Pill amount',
-            ),
-            kMediumVerticalSpacing,
+          ///
+          CustomTextField(
+            controller: TextEditingController(),
+            labelText: 'Pill amount',
+            hintText: '1',
+          ),
+          kMediumVerticalSpacing,
 
-            ///
-            CustomTextField(
-              controller: TextEditingController(),
-              hintText: 'Time',
-            ),
-            kMediumVerticalSpacing,
+          ///
+          CustomTextField(
+            controller: TextEditingController(),
+            labelText: 'Time',
+            hintText: '07:00',
+          ),
+          kMediumVerticalSpacing,
 
-            ///
-            Text('How long this reminder will last?', style: kBodyTextBold),
-            SliderTheme(
-              data: SliderThemeData(
-                thumbColor: kPrimaryColor,
-                overlayColor: kPrimaryBgColor,
-                activeTrackColor: kPrimaryColor,
-                trackShape: SliderCustomTrackShape(),
-              ),
-              child: BlocBuilder<AddReminderCubit, AddReminderState>(
-                builder: (context, state) {
-                  return Slider(
-                    value: addReminder.week,
-                    max: 100,
-                    min: 1,
-                    onChanged: (v) {
-                      addReminder.setWeek(v);
-                    },
-                  );
-                },
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: BlocBuilder<AddReminderCubit, AddReminderState>(
-                builder: (context, state) => addReminder.week.round() > 1
-                    ? Text(
-                        '${addReminder.week.round()} weeks',
-                      )
-                    : Text(
-                        '${addReminder.week.round()} week',
-                      ),
-              ),
-            ),
-            kMediumVerticalSpacing,
-
-            ///
-            Text('Times per day', style: kBodyTextBold),
-            kSmallVerticalSpacing,
-            Row(
+          ///
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child:
+                Text('How long this reminder will last?', style: kBodyTextBold),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
               children: [
-                Expanded(
-                  child: CustomTextField(
-                    hintText: 'How many times',
-                    controller: TextEditingController(),
+                SliderTheme(
+                  data: SliderThemeData(
+                    thumbColor: kPrimaryColor,
+                    overlayColor: kPrimaryBgColor,
+                    activeTrackColor: kPrimaryColor,
+                    trackShape: SliderCustomTrackShape(),
+                  ),
+                  child: BlocBuilder<AddReminderCubit, AddReminderState>(
+                    builder: (context, state) {
+                      return Slider(
+                        value: addReminder.week,
+                        max: 100,
+                        min: 1,
+                        onChanged: (v) {
+                          addReminder.setWeek(v);
+                        },
+                      );
+                    },
                   ),
                 ),
-                kSmallHorizontalSpacing,
-                Expanded(
-                  child: CustomTextField(
-                    hintText: 'Consumption Interval',
-                    controller: TextEditingController(),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: BlocBuilder<AddReminderCubit, AddReminderState>(
+                    builder: (context, state) => addReminder.week.round() > 1
+                        ? Text(
+                            '${addReminder.week.round()} weeks',
+                          )
+                        : Text(
+                            '${addReminder.week.round()} week',
+                          ),
                   ),
                 ),
+                kMediumVerticalSpacing,
               ],
             ),
-            kBigVerticalSpacing,
+          ),
 
-            ///
-            Text('Pill type', style: kBodyTextBold),
-            SizedBox(
-              height: 150,
+          ///
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text('Times per day', style: kBodyTextBold),
+          ),
+          kSmallVerticalSpacing,
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextField(
+                  labelText: 'How many times',
+                  hintText: '1x',
+                  controller: TextEditingController(),
+                ),
+              ),
+              kSmallHorizontalSpacing,
+              Expanded(
+                child: CustomTextField(
+                  labelText: 'Consumption Interval',
+                  hintText: '5',
+                  controller: TextEditingController(),
+                ),
+              ),
+            ],
+          ),
+          kBigVerticalSpacing,
+
+          ///
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text('Pill type', style: kBodyTextBold),
+          ),
+          SizedBox(
+            //padding: const EdgeInsets.only(left: 20),
+            height: 150,
+            child: Expanded(
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
+                  SizedBox(
+                    width: 20,
+                  ),
                   ...List.generate(
                     5,
                     (index) => BlocBuilder<AddReminderCubit, AddReminderState>(
@@ -125,6 +150,7 @@ class AddReminderPage extends StatelessWidget {
                                     color: Colors.grey[200]!,
                                   )
                                 ]),
+                            //   child: Image.asset('assets/kapsul.jpg'),
                           ),
                         );
                       },
@@ -133,24 +159,24 @@ class AddReminderPage extends StatelessWidget {
                 ],
               ),
             ),
+          ),
 
-            ///
-            CustomButton(
-              child: const Text('Simpan'),
-              onTap: () => showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) => Dialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const AlertSection(),
+          ///
+          CustomButton(
+            child: const Text('Simpan'),
+            onTap: () => showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
+                child: const AlertSection(),
               ),
             ),
-            kBigVerticalSpacing,
-          ],
-        ),
+          ),
+          kBigVerticalSpacing,
+        ],
       ),
     );
   }
