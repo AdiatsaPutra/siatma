@@ -116,15 +116,12 @@ class AddReminderPage extends StatelessWidget {
             child: Text('Pill type', style: kBodyTextBold),
           ),
           SizedBox(
-            //padding: const EdgeInsets.only(left: 20),
             height: 150,
             child: Expanded(
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  SizedBox(
-                    width: 20,
-                  ),
+                  kBigVerticalSpacing,
                   ...List.generate(
                     5,
                     (index) => BlocBuilder<AddReminderCubit, AddReminderState>(

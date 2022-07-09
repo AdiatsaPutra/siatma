@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:logger/logger.dart';
 import 'package:si_atma/core/custom_exception.dart';
 import 'package:si_atma/models/user_pill.dart';
 import 'package:sqflite/sqflite.dart' as sql;

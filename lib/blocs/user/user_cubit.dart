@@ -11,6 +11,8 @@ part 'user_cubit.freezed.dart';
 class UserCubit extends Cubit<UserState> {
   UserCubit() : super(const UserState.initial());
 
+  final key = GlobalKey<FormState>();
+
   final name = TextEditingController();
   final password = TextEditingController();
 
