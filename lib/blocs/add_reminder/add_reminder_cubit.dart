@@ -7,12 +7,12 @@ part 'add_reminder_cubit.freezed.dart';
 class AddReminderCubit extends Cubit<AddReminderState> {
   AddReminderCubit() : super(const AddReminderState.initial());
 
-  double week = 1;
+  double day = 1;
   int? selectedCategory;
 
-  void setWeek(double week) {
+  void setWeek(double day) {
     emit(const AddReminderState.loading());
-    this.week = week;
+    this.day = day;
     emit(const AddReminderState.loaded());
   }
 

@@ -14,9 +14,6 @@ class TileReminder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    var formatterDate = DateFormat('hh:mm');
-    String actualDate = formatterDate.format(now);
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Container(
@@ -52,7 +49,7 @@ class TileReminder extends StatelessWidget {
                       children: [
                         Text(userPill.name, style: kMediumTextBold),
                         Text(
-                          actualDate.toString(),
+                          userPill.time,
                           style: kBodyText.copyWith(
                             color: Colors.grey[600],
                           ),

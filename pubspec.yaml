@@ -13,6 +13,7 @@ dependencies:
   calendar_timeline: ^1.0.4
   cupertino_icons: ^1.0.2
   dartz: ^0.10.1
+  datetime_picker_formfield: ^2.0.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1

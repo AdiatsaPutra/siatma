@@ -29,7 +29,7 @@ class AddReminderPage extends StatelessWidget {
           kMediumVerticalSpacing,
 
           ///
-          CustomTextField(
+          CustomDatePicker(
             controller: TextEditingController(),
             labelText: 'Time',
             hintText: '07:00',
@@ -56,8 +56,8 @@ class AddReminderPage extends StatelessWidget {
                   child: BlocBuilder<AddReminderCubit, AddReminderState>(
                     builder: (context, state) {
                       return Slider(
-                        value: addReminder.week,
-                        max: 100,
+                        value: addReminder.day,
+                        max: 50,
                         min: 1,
                         onChanged: (v) {
                           addReminder.setWeek(v);
@@ -69,16 +69,16 @@ class AddReminderPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: BlocBuilder<AddReminderCubit, AddReminderState>(
-                    builder: (context, state) => addReminder.week.round() > 1
+                    builder: (context, state) => addReminder.day.round() > 1
                         ? Text(
-                            '${addReminder.week.round()} weeks',
+                            '${addReminder.day.round()} days',
                           )
                         : Text(
-                            '${addReminder.week.round()} week',
+                            '${addReminder.day.round()} day',
                           ),
                   ),
                 ),
-                kMediumVerticalSpacing,
+                kSmallVerticalSpacing,
               ],
             ),
           ),
@@ -88,25 +88,30 @@ class AddReminderPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text('Times per day', style: kBodyTextBold),
           ),
-          kSmallVerticalSpacing,
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextField(
-                  labelText: 'How many times',
-                  hintText: '1x',
-                  controller: TextEditingController(),
+          kMediumVerticalSpacing,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: CustomTextField(
+                    labelText: 'How many times',
+                    hintText: '1x',
+                    padding: 0,
+                    controller: TextEditingController(),
+                  ),
                 ),
-              ),
-              kSmallHorizontalSpacing,
-              Expanded(
-                child: CustomTextField(
-                  labelText: 'Consumption Interval',
-                  hintText: '5',
-                  controller: TextEditingController(),
+                kSmallHorizontalSpacing,
+                Expanded(
+                  child: CustomTextField(
+                    labelText: 'Consumption Interval',
+                    hintText: '5 (hours)',
+                    padding: 0,
+                    controller: TextEditingController(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           kBigVerticalSpacing,
 
@@ -133,7 +138,8 @@ class AddReminderPage extends StatelessWidget {
                           child: Container(
                             width: 100,
                             height: 50,
-                            margin: const EdgeInsets.fromLTRB(0, 16, 10, 16),
+                            margin: EdgeInsets.fromLTRB(
+                                index == 0 ? 20 : 0, 16, 10, 16),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -161,16 +167,18 @@ class AddReminderPage extends StatelessWidget {
           ///
           CustomButton(
             child: const Text('Simpan'),
-            onTap: () => showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => Dialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const AlertSection(),
-              ),
-            ),
+            onTap: () {
+              // showDialog(
+              //   context: context,
+              //   barrierDismissible: false,
+              //   builder: (context) => Dialog(
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     child: const AlertSection(),
+              //   ),
+              // );
+            },
           ),
           kBigVerticalSpacing,
         ],
@@ -188,12 +196,9 @@ class AlertSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(
-            'assets/reminder_added.png',
-            height: 200,
-          ),
+        Image.asset(
+          'assets/reminder_added.png',
+          height: 200,
         ),
         Text(
           'Reminder Ditambah',
@@ -205,7 +210,11 @@ class AlertSection extends StatelessWidget {
             child: const Text('Simpan'),
             onTap: () {
               UserPillRepository.createUserPill();
-              context.read<ReminderCubit>().getPill(DateTime.now().toString());
+              context.read<ReminderCubit>().getPill(
+                    DateFormat('yyyy-MM-dd').format(
+                      DateTime.now(),
+                    ),
+                  );
             },
           ),
         )

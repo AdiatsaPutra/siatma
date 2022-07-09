@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:si_atma/core/custom_exception.dart';
 import 'package:si_atma/models/user_pill.dart';
 import 'package:sqflite/sqflite.dart' as sql;
@@ -11,8 +13,6 @@ class UserPillRepository {
         amount INTEGER,
         date TIMESTAMP,
         time TIMESTAMP,
-        timesADay TEXT,
-        interval TEXT,
         type INTEGER,
         createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
@@ -32,16 +32,24 @@ class UserPillRepository {
   static Future<Either<CustomException, void>> createUserPill() async {
     try {
       final db = await UserPillRepository.db();
-      final data = {
-        'name': 'pill',
-        'amount': 3,
-        'date': '2022-07-09',
-        'time': '09:09:41',
-        'timesADay': '3',
-        'interval': '3',
-        'type': 1,
-      };
-      await db.insert('Userpills', data);
+      //times a day
+      for (var t = 0; t < 3; t++) {
+        //for how many days
+        for (var i = 0; i < 10; i++) {
+          final data = {
+            'name': 'pill',
+            'amount': 3,
+            'date': DateFormat('yyyy-MM-dd').format(
+              DateTime.now().add(Duration(days: i)),
+            ),
+            'time': DateFormat('HH:mm').format(
+              DateTime.now().add(Duration(hours: t)),
+            ),
+            'type': 1,
+          };
+          await db.insert('Userpills', data);
+        }
+      }
       return const Right(null);
     } catch (e) {
       return Left(CustomException(e.toString()));

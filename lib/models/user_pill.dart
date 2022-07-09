@@ -4,8 +4,6 @@ class UserPill {
   final int amount;
   final String date;
   final String time;
-  final String timesADay;
-  final String interval;
   final int type;
 
   UserPill({
@@ -14,8 +12,6 @@ class UserPill {
     required this.amount,
     required this.date,
     required this.time,
-    required this.timesADay,
-    required this.interval,
     required this.type,
   });
 
@@ -26,8 +22,6 @@ class UserPill {
       amount: json['amount'],
       date: json['date'],
       time: json['time'],
-      timesADay: json['timesADay'],
-      interval: json['interval'],
       type: json['type'],
     );
   }

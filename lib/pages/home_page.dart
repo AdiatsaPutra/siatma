@@ -27,11 +27,13 @@ class HomePage extends StatelessWidget {
                 return Column(
                   children: [
                     ...p.map(
-                      (e) => TileReminder(
-                        userPill: e,
-                        isSelected: true,
-                        onTap: () {},
-                      ),
+                      (e) {
+                        return TileReminder(
+                          userPill: e,
+                          isSelected: true,
+                          onTap: () {},
+                        );
+                      },
                     )
                   ],
                 );
