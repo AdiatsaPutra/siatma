@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 Color kPrimaryColor = const Color(0xff3152FF);
 Color kSecondaryColor = const Color(0xff47FFE9);
+Color kPrimaryBgColor = const Color(0xffE9ECFF);
 
 const kBiggestVerticalSpacing = SizedBox(height: 40);
 const kBigVerticalSpacing = SizedBox(height: 20);
@@ -32,5 +33,12 @@ TextStyle kBodyText = const TextStyle(fontSize: 14);
 
 TextStyle kBodyTextBold = const TextStyle(
   fontSize: 14,
+  fontWeight: FontWeight.bold,
+);
+
+TextStyle kSmallText = const TextStyle(fontSize: 12);
+
+TextStyle kSmallTextBold = const TextStyle(
+  fontSize: 12,
   fontWeight: FontWeight.bold,
 );

@@ -72,7 +72,7 @@ class _MainPageState extends State<MainPage> {
                   color: Color(0xff3152FF),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/add-reminder-page');
+                  Navigator.pushNamed(context, addReminderPage);
                 },
               ),
             ),

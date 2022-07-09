@@ -59,7 +59,8 @@ class LoginPage extends StatelessWidget {
                       listener: (context, state) => state.maybeWhen(
                         loaded: (user) => Navigator.pushNamed(
                           context,
-                          homePage,
+                          mainPage,
+                          arguments: user,
                         ),
                         orElse: () {
                           return null;
