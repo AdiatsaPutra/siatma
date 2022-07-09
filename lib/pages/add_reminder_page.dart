@@ -29,6 +29,13 @@ class AddReminderPage extends StatelessWidget {
             kMediumVerticalSpacing,
 
             ///
+            CustomTextField(
+              controller: TextEditingController(),
+              hintText: 'Time',
+            ),
+            kMediumVerticalSpacing,
+
+            ///
             Text('How long this reminder will last?', style: kBodyTextBold),
             SliderTheme(
               data: SliderThemeData(

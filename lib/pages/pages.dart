@@ -2,7 +2,6 @@ import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
-import 'package:intl/intl.dart';
 import 'package:si_atma/blocs/add_reminder/add_reminder_cubit.dart';
 import 'package:si_atma/blocs/user/user_cubit.dart';
 import 'package:si_atma/constants/constants.dart';
