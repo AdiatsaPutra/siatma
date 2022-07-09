@@ -6,52 +6,114 @@ class AddReminderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add your reminder')),
+      appBar: AppBar(title: const Text('Add pill')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
           children: [
-            kMediumVerticalSpacing,
-            const Text(
-              'Tambah Remindermu',
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-            ),
-            kMediumVerticalSpacing,
-            CustomTextField(
-                controller: TextEditingController(), hintText: 'Judul'),
-            kMediumVerticalSpacing,
-            CustomTextField(
-                controller: TextEditingController(), hintText: 'Tanggal'),
-            kMediumVerticalSpacing,
+            kBigVerticalSpacing,
+
+            ///
             CustomTextField(
               controller: TextEditingController(),
-              hintText: 'Deskripsi',
-              maxLines: 10,
+              hintText: 'Pill name',
             ),
             kMediumVerticalSpacing,
-            CustomButton(
-              child: const Text('Simpan'),
-              onTap: () => showModalBottomSheet(
-                backgroundColor: Colors.transparent,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15.0),
+
+            ///
+            CustomTextField(
+              controller: TextEditingController(),
+              hintText: 'Pill amount',
+            ),
+            kMediumVerticalSpacing,
+
+            ///
+            Text('How long this reminder will last?', style: kBodyTextBold),
+            SliderTheme(
+              data: SliderThemeData(
+                thumbColor: kPrimaryColor,
+                overlayColor: kPrimaryBgColor,
+                activeTrackColor: kPrimaryColor,
+                trackShape: SliderCustomTrackShape(),
+              ),
+              child: Slider(
+                value: 50,
+                max: 100,
+                onChanged: (v) {},
+              ),
+            ),
+            const Align(
+              alignment: Alignment.centerRight,
+              child: Text('1 week'),
+            ),
+            kMediumVerticalSpacing,
+
+            ///
+            Text('Times per day', style: kBodyTextBold),
+            kSmallVerticalSpacing,
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextField(
+                    hintText: 'How many times',
+                    controller: TextEditingController(),
                   ),
                 ),
-                //  isDismissible: true,
-                context: context,
-                isScrollControlled: true,
-                builder: (context) {
-                  return const FractionallySizedBox(
-                    heightFactor: 0.95,
-                    child: AlertSection(),
-                  );
-                },
+                kSmallHorizontalSpacing,
+                Expanded(
+                  child: CustomTextField(
+                    hintText: 'Consumption Interval',
+                    controller: TextEditingController(),
+                  ),
+                ),
+              ],
+            ),
+            kBigVerticalSpacing,
+
+            ///
+            Text('Pill type', style: kBodyTextBold),
+            SizedBox(
+              height: 150,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  ...List.generate(
+                    5,
+                    (index) => Container(
+                      width: 100,
+                      height: 50,
+                      margin: const EdgeInsets.fromLTRB(0, 16, 10, 16),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 1,
+                              spreadRadius: 3,
+                              color: Colors.grey[200]!,
+                            )
+                          ]),
+                    ),
+                  ),
+                ],
               ),
-            )
+            ),
+
+            ///
+            CustomButton(
+              child: const Text('Simpan'),
+              onTap: () => showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const AlertSection(),
+                ),
+              ),
+            ),
+            kBigVerticalSpacing,
           ],
         ),
       ),
@@ -64,39 +126,47 @@ class AlertSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width - 120,
-          height: 250,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  'assets/reminder_added.png',
-                  height: 100,
-                ),
-              ),
-              const Text(
-                'Reminder Ditambah',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CustomButton(child: const Text('Simpan'), onTap: () {}),
-              )
-            ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(
+            'assets/reminder_added.png',
+            height: 200,
           ),
         ),
-      ),
+        Text(
+          'Reminder Ditambah',
+          style: kBigTextBold,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: CustomButton(
+            child: const Text('Simpan'),
+            onTap: () {},
+          ),
+        )
+      ],
     );
+  }
+}
+
+class SliderCustomTrackShape extends RoundedRectSliderTrackShape {
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double? trackHeight = sliderTheme.trackHeight;
+    final double trackLeft = offset.dx;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final double trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
