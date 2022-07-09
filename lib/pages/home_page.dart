@@ -37,7 +37,9 @@ class HomePage extends StatelessWidget {
               ),
               error: (e) => Text(e),
               loaded: (p) {
-                print(p);
+                if (p.isEmpty) {
+                  return const EmptyReminder();
+                }
                 return Expanded(
                   child: Column(
                     children: [

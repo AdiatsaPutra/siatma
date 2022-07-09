@@ -17,4 +17,4 @@ part 'login_page.dart';
 part 'main_page.dart';
 part 'home_page.dart';
 part 'add_reminder_page.dart';
-part 'empty_reminder_page.dart';
+part 'empty_reminder.dart';

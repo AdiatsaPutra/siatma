@@ -13,5 +13,5 @@ final routes = {
   mainPage: (context) => const MainPage(),
   homePage: (context) => const HomePage(),
   addReminderPage: (context) => const AddReminderPage(),
-  emptyReminderPage: (context) => const EmptyReminderPage(),
+  emptyReminderPage: (context) => const EmptyReminder(),
 };
