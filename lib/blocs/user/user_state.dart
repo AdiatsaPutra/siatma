@@ -1,15 +1,9 @@
 part of 'user_cubit.dart';
 
-abstract class UserState {}
-
-class UserInitial extends UserState {}
-
-class UserLoading extends UserState {}
-
-class UserLoaded extends UserState {}
-
-class UserError extends UserState {
-  final String message;
-
-  UserError(this.message);
+@freezed
+class UserState with _$UserState {
+  const factory UserState.initial() = _Initial;
+  const factory UserState.loading() = _Loading;
+  const factory UserState.loaded(User user) = _Loaded;
+  const factory UserState.error(String message) = _Error;
 }

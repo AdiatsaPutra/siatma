@@ -6,50 +6,12 @@ class AddReminderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(55),
-        child: Column(
-          children: [
-            Container(
-              color: const Color(0xff3B5BFF),
-              height: 30,
-            ),
-            Container(
-              color: const Color(0xff3B5BFF),
-              height: 50,
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.arrow_back_outlined,
-                          color: Colors.white, size: 24)),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 100,
-                    child: const Center(
-                      child: Text(
-                        'Tambah Reminder ',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBar(title: const Text('Add your reminder')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
           children: [
-            const SizedBox(
-              height: 16,
-            ),
+            kMediumVerticalSpacing,
             const Text(
               'Tambah Remindermu',
               style: TextStyle(
@@ -57,25 +19,21 @@ class AddReminderPage extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   color: Colors.black),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            const CustomTextField(hintText: 'Judul'),
-            const SizedBox(
-              height: 16,
-            ),
-            const CustomTextField(hintText: 'Tanggal'),
-            const SizedBox(
-              height: 16,
-            ),
-            const CustomTextField(
+            kMediumVerticalSpacing,
+            CustomTextField(
+                controller: TextEditingController(), hintText: 'Judul'),
+            kMediumVerticalSpacing,
+            CustomTextField(
+                controller: TextEditingController(), hintText: 'Tanggal'),
+            kMediumVerticalSpacing,
+            CustomTextField(
+              controller: TextEditingController(),
               hintText: 'Deskripsi',
               maxLines: 10,
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            SubmitButton(
+            kMediumVerticalSpacing,
+            CustomButton(
+              child: const Text('Simpan'),
               onTap: () => showModalBottomSheet(
                 backgroundColor: Colors.transparent,
                 shape: const RoundedRectangleBorder(
@@ -133,7 +91,7 @@ class AlertSection extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: SubmitButton(onTap: () {}),
+                child: CustomButton(child: const Text('Simpan'), onTap: () {}),
               )
             ],
           ),

@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:si_atma/core/custom_exception.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 import '../models/user.dart';
@@ -23,41 +25,27 @@ class UserRepository {
     );
   }
 
-  static Future<User> login(String name, String? password) async {
-    final db = await UserRepository.db();
+  static Future<Either<CustomException, User>> login(
+      String name, String password) async {
+    try {
+      final db = await UserRepository.db();
 
-    final data = {'name': name, 'password': password};
+      final data = {'name': name, 'password': password};
 
-    final id = await db.insert('users', data,
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
+      final id = await db.insert('users', data,
+          conflictAlgorithm: sql.ConflictAlgorithm.replace);
 
-    final user = await db.query(
-      'users',
-      where: "id = ?",
-      whereArgs: [id],
-      limit: 1,
-    );
+      final user = await db.query(
+        'users',
+        where: "id = ?",
+        whereArgs: [id],
+        limit: 1,
+      );
 
-    final u = User.fromJson(user.first);
-    return u;
+      final u = User.fromJson(user.first);
+      return Right(u);
+    } catch (e) {
+      return Left(CustomException(e.toString()));
+    }
   }
-
-  // static Future<User> profile() async {
-  //   final db = await UserRepository.db();
-
-  //   final data = {'name': name, 'password': password};
-
-  //   final id = await db.insert('users', data,
-  //       conflictAlgorithm: sql.ConflictAlgorithm.replace);
-
-  //   final user = await db.query(
-  //     'users',
-  //     where: "id = ?",
-  //     whereArgs: [id],
-  //     limit: 1,
-  //   );
-
-  //   final u = User.fromJson(user.first);
-  //   return u;
-  // }
 }

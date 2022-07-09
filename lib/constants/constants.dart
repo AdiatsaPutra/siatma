@@ -1,44 +1,36 @@
 import 'package:flutter/material.dart';
-//import 'package:google_fonts/google_fonts.dart';
 
-double defaultMargin = 24.0;
-double defaultRadius = 17.0;
+Color kPrimaryColor = const Color(0xff3152FF);
+Color kSecondaryColor = const Color(0xff47FFE9);
 
-Color kPrimaryColor = Color(0xff5C40CC);
-Color kBlackColor = Color(0xff1F1449);
-Color kWhiteColor = Color(0xffFFFFFF);
-Color kGreyColor = Color(0xff9698A9);
-Color kGreenColor = Color(0xff0EC3AE);
-Color kRedColor = Color(0xffEB70A5);
-Color kBackgroundColor = Color(0xffFAFAFA);
-Color kInactiveColor = Color(0xffDBD7EC);
-Color kTransparentColor = Colors.transparent;
-Color kAvailableColor = Color(0xffE0D9FF);
-Color kUnavailableColor = Color(0xffEBECF1);
+const kBiggestVerticalSpacing = SizedBox(height: 40);
+const kBigVerticalSpacing = SizedBox(height: 20);
+const kMediumVerticalSpacing = SizedBox(height: 15);
+const kSmallVerticalSpacing = SizedBox(height: 10);
+const kSmallestVerticalSpacing = SizedBox(height: 5);
 
-// TextStyle blackTextStyle = GoogleFonts.poppins(
-//   color: kBlackColor,
-// );
-// TextStyle whiteTextStyle = GoogleFonts.poppins(
-//   color: kWhiteColor,
-// );
-// TextStyle greyTextStyle = GoogleFonts.poppins(
-//   color: kGreyColor,
-// );
-// TextStyle greenTextStyle = GoogleFonts.poppins(
-//   color: kGreenColor,
-// );
-// TextStyle redTextStyle = GoogleFonts.poppins(
-//   color: kRedColor,
-// );
-// TextStyle purpleTextStyle = GoogleFonts.poppins(
-//   color: kPrimaryColor,
-// );
+const kBigHorizontalSpacing = SizedBox(width: 20);
+const kMediumHorizontalSpacing = SizedBox(width: 15);
+const kSmallHorizontalSpacing = SizedBox(width: 10);
+const kSmallestHorizontalSpacing = SizedBox(width: 5);
 
-FontWeight light = FontWeight.w300;
-FontWeight regular = FontWeight.w400;
-FontWeight medium = FontWeight.w500;
-FontWeight semiBold = FontWeight.w600;
-FontWeight bold = FontWeight.w700;
-FontWeight extraBold = FontWeight.w800;
-FontWeight black = FontWeight.w900;
+TextStyle kBigText = const TextStyle(fontSize: 20);
+
+TextStyle kBigTextBold = const TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+);
+
+TextStyle kMediumText = const TextStyle(fontSize: 16);
+
+TextStyle kMediumTextBold = const TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+);
+
+TextStyle kBodyText = const TextStyle(fontSize: 14);
+
+TextStyle kBodyTextBold = const TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.bold,
+);

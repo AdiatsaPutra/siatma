@@ -1,13 +1,5 @@
 part of 'pages.dart';
 
-// class Date{
-//     DateTime now = DateTime.now();
-//     var formatterDate = DateFormat('dd MMMM yyyy');
-//     var formatterTime = DateFormat('kk:mm');
-//     String actualDate = formatterDate.format(now);
-//     String actualTime = formatterTime.format(now);
-// }
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -21,13 +13,9 @@ class _HomePageState extends State<HomePage> {
   final List<int> yesterdayCategory = [3, -2, 2, 5];
   @override
   Widget build(BuildContext context) {
-    final String cdate1 = DateFormat("EEEEE").format(DateTime.now());
-
     DateTime now = DateTime.now();
     var formatterDate = DateFormat('dd MMMM yyyy');
-    var formatterTime = DateFormat('kk:mm');
     String actualDate = formatterDate.format(now);
-    String actualTime = formatterTime.format(now);
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(110),
@@ -35,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(
         children: [
-          ReminderDay(
+          const ReminderDay(
             date: 'Hari ini',
           ),
           Column(
@@ -48,7 +36,7 @@ class _HomePageState extends State<HomePage> {
             children:
                 generateReminderWidgets(context, dateList: yesterdayCategory),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           )
         ],
@@ -98,12 +86,12 @@ class ReminderDay extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.only(left: 20),
           child: Text(
             date,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
           ),
         ),
@@ -127,11 +115,9 @@ class CardReminder extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     var formatterDate = DateFormat('dd MMMM yyyy');
-    var formatterTime = DateFormat('kk:mm');
     String actualDate = formatterDate.format(now);
-    String actualTime = formatterTime.format(now);
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -160,13 +146,13 @@ class CardReminder extends StatelessWidget {
                         width: 20,
                         height: 20,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Obat sakit perut',
                             style: TextStyle(
                                 color: Colors.black,
@@ -175,23 +161,23 @@ class CardReminder extends StatelessWidget {
                           ),
                           Text(
                             actualDate.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Color(0xff7B8E93),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500),
                           )
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       IconButton(
                           onPressed: onTap,
                           icon: isSelected
-                              ? Icon(
+                              ? const Icon(
                                   Icons.check_circle,
                                   size: 32,
                                   color: Color(0xff47FFE9),
                                 )
-                              : Icon(
+                              : const Icon(
                                   Icons.circle_outlined,
                                   size: 32,
                                   color: Color(0xffF0F4F4),
@@ -200,14 +186,14 @@ class CardReminder extends StatelessWidget {
                   ),
                 ),
                 ketentuan < 0
-                    ? SizedBox()
+                    ? const SizedBox()
                     : Padding(
                         padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: Color(0xffE9ECFF),
+                            color: const Color(0xffE9ECFF),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Column(
@@ -219,7 +205,7 @@ class CardReminder extends StatelessWidget {
                                     const EdgeInsets.symmetric(horizontal: 8),
                                 child: Text(
                                   'Pil diminum $ketentuan kali',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Color(0xff3B5BFF),
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500),

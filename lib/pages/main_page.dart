@@ -9,8 +9,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     EmptyReminderPage()
@@ -39,7 +37,7 @@ class _MainPageState extends State<MainPage> {
                       'assets/bar_reminder.jpg',
                       height: 16,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     )
                   ],
@@ -48,7 +46,7 @@ class _MainPageState extends State<MainPage> {
               ),
               BottomNavigationBarItem(
                 icon: Column(
-                  children: [
+                  children: const [
                     Icon(Icons.format_quote_sharp),
                     SizedBox(
                       height: 2,
@@ -59,7 +57,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ],
             currentIndex: _selectedIndex,
-            selectedItemColor: Color(0xff3152FF),
+            selectedItemColor: const Color(0xff3152FF),
             onTap: _onItemTapped,
           ),
           Positioned(
@@ -68,12 +66,10 @@ class _MainPageState extends State<MainPage> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: GestureDetector(
-                child: Container(
-                  child: Icon(
-                    Icons.add_circle,
-                    size: 50,
-                    color: Color(0xff3152FF),
-                  ),
+                child: const Icon(
+                  Icons.add_circle,
+                  size: 50,
+                  color: Color(0xff3152FF),
                 ),
                 onTap: () {
                   Navigator.pushNamed(context, '/add-reminder-page');

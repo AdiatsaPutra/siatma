@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-
-import 'pages/pages.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:si_atma/blocs/user/user_cubit.dart';
+import 'package:si_atma/constants/routes.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -11,16 +19,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => const SplashPage(),
-        '/login': (context) => const LoginPage(),
-        '/main-page': (context) => const MainPage(),
-        '/home-page': (context) => const HomePage(),
-        '/add-reminder-page': (context) => const AddReminderPage(),
-        '/empty-reminder-page': (context) => const EmptyReminderPage(),
-      },
+    return BlocProvider(
+      create: (context) => UserCubit(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: routes,
+      ),
     );
   }
 }
