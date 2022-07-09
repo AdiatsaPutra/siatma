@@ -5,31 +5,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // DateTime now = DateTime.now();
-    // var formatterDate = DateFormat('dd MMMM yyyy');
-    // String actualDate = formatterDate.format(now);
     final user = ModalRoute.of(context)!.settings.arguments as User;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(110),
+        preferredSize: const Size.fromHeight(230),
         child: AppBarHomePage(user: user),
       ),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          CalendarTimeline(
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2022),
-            lastDate: DateTime(2100),
-            onDateSelected: (date) => print(date),
-            leftMargin: 20,
-            monthColor: Colors.black,
-            dayColor: kPrimaryColor,
-            activeDayColor: kPrimaryColor,
-            activeBackgroundDayColor: kPrimaryBgColor,
-            dotsColor: Colors.white,
-            locale: 'id',
-          ),
           BlocBuilder<ReminderCubit, ReminderState>(
             builder: (context, state) => state.maybeWhen(
               loading: () => const Center(
@@ -40,18 +24,16 @@ class HomePage extends StatelessWidget {
                 if (p.isEmpty) {
                   return const EmptyReminder();
                 }
-                return Expanded(
-                  child: Column(
-                    children: [
-                      ...p.map(
-                        (e) => TileReminder(
-                          isSelected: true,
-                          onTap: () {},
-                          ketentuan: 3,
-                        ),
-                      )
-                    ],
-                  ),
+                return Column(
+                  children: [
+                    ...p.map(
+                      (e) => TileReminder(
+                        userPill: e,
+                        isSelected: true,
+                        onTap: () {},
+                      ),
+                    )
+                  ],
                 );
               },
               orElse: () => const SizedBox(),

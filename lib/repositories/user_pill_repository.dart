@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:logger/logger.dart';
 import 'package:si_atma/core/custom_exception.dart';
 import 'package:si_atma/models/user_pill.dart';
 import 'package:sqflite/sqflite.dart' as sql;
@@ -10,6 +11,7 @@ class UserPillRepository {
         name TEXT,
         amount INTEGER,
         date TIMESTAMP,
+        time TIMESTAMP,
         timesADay TEXT,
         interval TEXT,
         type INTEGER,
@@ -32,9 +34,10 @@ class UserPillRepository {
     try {
       final db = await UserPillRepository.db();
       final data = {
-        'name': 'name',
+        'name': 'pill',
         'amount': 3,
-        'date': '2022-07-09 09:09:41',
+        'date': '2022-07-09',
+        'time': '09:09:41',
         'timesADay': '3',
         'interval': '3',
         'type': 1,
@@ -46,10 +49,16 @@ class UserPillRepository {
     }
   }
 
-  static Future<Either<CustomException, List<UserPill>>> getUserPill() async {
+  static Future<Either<CustomException, List<UserPill>>> getUserPill(
+    String date,
+  ) async {
     try {
       final db = await UserPillRepository.db();
-      final userPill = await db.query('Userpills');
+      final userPill = await db.query(
+        'Userpills',
+        where: 'date = ?',
+        whereArgs: [date],
+      );
       final u = userPill.map((e) => UserPill.fromJson(e)).toList();
       return Right(u);
     } catch (e) {

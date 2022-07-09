@@ -1,21 +1,21 @@
 part of 'widgets.dart';
 
 class TileReminder extends StatelessWidget {
+  final UserPill userPill;
   final VoidCallback onTap;
   final bool isSelected;
-  final int ketentuan;
 
   const TileReminder({
     Key? key,
     required this.isSelected,
     required this.onTap,
-    required this.ketentuan,
+    required this.userPill,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
-    var formatterDate = DateFormat('dd MMMM yyyy');
+    var formatterDate = DateFormat('hh:mm');
     String actualDate = formatterDate.format(now);
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -46,25 +46,16 @@ class TileReminder extends StatelessWidget {
                       width: 20,
                       height: 20,
                     ),
-                    const SizedBox(
-                      width: 16,
-                    ),
+                    kMediumHorizontalSpacing,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Obat sakit perut',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
+                        Text(userPill.name, style: kMediumTextBold),
                         Text(
                           actualDate.toString(),
-                          style: const TextStyle(
-                              color: Color(0xff7B8E93),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
+                          style: kBodyText.copyWith(
+                            color: Colors.grey[600],
+                          ),
                         )
                       ],
                     ),
@@ -86,36 +77,30 @@ class TileReminder extends StatelessWidget {
                   ],
                 ),
               ),
-              ketentuan < 0
-                  ? const SizedBox()
-                  : Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffE9ECFF),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: Text(
-                                'Pil diminum $ketentuan kali',
-                                style: const TextStyle(
-                                    color: Color(0xff3B5BFF),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffE9ECFF),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          'Pil amount: ${userPill.amount}',
+                          style: kBodyTextBold.copyWith(color: kPrimaryColor),
                         ),
                       ),
-                    )
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),

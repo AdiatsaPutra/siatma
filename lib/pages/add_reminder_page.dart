@@ -182,6 +182,7 @@ class AlertSection extends StatelessWidget {
             child: const Text('Simpan'),
             onTap: () {
               UserPillRepository.createUserPill();
+              context.read<ReminderCubit>().getPill(DateTime.now().toString());
             },
           ),
         )
