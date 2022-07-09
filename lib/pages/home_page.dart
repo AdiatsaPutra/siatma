@@ -30,11 +30,32 @@ class HomePage extends StatelessWidget {
             dotsColor: Colors.white,
             locale: 'id',
           ),
-          TileReminder(
-            isSelected: true,
-            onTap: () {},
-            ketentuan: 3,
+          BlocBuilder<ReminderCubit, ReminderState>(
+            builder: (context, state) => state.maybeWhen(
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              error: (e) => Text(e),
+              loaded: (p) {
+                print(p);
+                return Expanded(
+                  child: Column(
+                    children: [
+                      ...p.map(
+                        (e) => TileReminder(
+                          isSelected: true,
+                          onTap: () {},
+                          ketentuan: 3,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+              orElse: () => const SizedBox(),
+            ),
           ),
+
           // Column(
           //   children: generateReminderWidgets(context, dateList: todayCategory),
           // ),

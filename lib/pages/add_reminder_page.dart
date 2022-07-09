@@ -180,7 +180,9 @@ class AlertSection extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: CustomButton(
             child: const Text('Simpan'),
-            onTap: () {},
+            onTap: () {
+              UserPillRepository.createUserPill();
+            },
           ),
         )
       ],

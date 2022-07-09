@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:si_atma/core/custom_exception.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
@@ -43,6 +44,12 @@ class UserRepository {
       );
 
       final u = User.fromJson(user.first);
+
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setString('name', u.name);
+      sharedPreferences.setString('password', u.password);
+
       return Right(u);
     } catch (e) {
       return Left(CustomException(e.toString()));

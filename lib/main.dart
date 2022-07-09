@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:si_atma/blocs/add_reminder/add_reminder_cubit.dart';
+import 'package:si_atma/blocs/reminder/reminder_cubit.dart';
 import 'package:si_atma/blocs/user/user_cubit.dart';
 import 'package:si_atma/constants/constants.dart';
 import 'package:si_atma/constants/routes.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => UserCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ReminderCubit()..getPill(),
         ),
         BlocProvider(
           create: (context) => AddReminderCubit(),
