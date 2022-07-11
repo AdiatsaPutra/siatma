@@ -6,6 +6,7 @@ class CustomDatePicker extends StatelessWidget {
   final String labelText;
   final String hintText;
   final String? Function(DateTime?)? validator;
+  final String? Function(DateTime?)? onChange;
   final double? padding;
 
   const CustomDatePicker(
@@ -15,7 +16,8 @@ class CustomDatePicker extends StatelessWidget {
       required this.hintText,
       required this.controller,
       this.validator,
-      this.padding})
+      this.padding,
+      required this.onChange})
       : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class CustomDatePicker extends StatelessWidget {
         },
         validator: validator,
         controller: controller,
-        onChanged: (value) {},
+        onChanged: onChange,
         decoration: InputDecoration(
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(

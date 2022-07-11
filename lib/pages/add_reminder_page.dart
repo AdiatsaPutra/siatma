@@ -14,7 +14,7 @@ class AddReminderPage extends StatelessWidget {
 
           ///
           CustomTextField(
-            controller: TextEditingController(),
+            controller: addReminder.pillName,
             labelText: 'Pill name',
             hintText: 'eg: Pil KB',
           ),
@@ -22,17 +22,25 @@ class AddReminderPage extends StatelessWidget {
 
           ///
           CustomTextField(
-            controller: TextEditingController(),
+            controller: addReminder.pillAmount,
             labelText: 'Pill amount',
             hintText: '1',
           ),
           kMediumVerticalSpacing,
 
           ///
-          CustomDatePicker(
-            controller: TextEditingController(),
-            labelText: 'Time',
-            hintText: '07:00',
+          BlocBuilder<AddReminderCubit, AddReminderState>(
+            builder: (context, state) {
+              return CustomDatePicker(
+                controller: addReminder.pillTime,
+                labelText: 'Time',
+                onChange: (v) {
+                  addReminder.setDate(v!);
+                  return null;
+                },
+                hintText: '07:00',
+              );
+            },
           ),
           kMediumVerticalSpacing,
 
@@ -98,7 +106,7 @@ class AddReminderPage extends StatelessWidget {
                     labelText: 'How many times',
                     hintText: '1x',
                     padding: 0,
-                    controller: TextEditingController(),
+                    controller: addReminder.pillTimes,
                   ),
                 ),
                 kSmallHorizontalSpacing,
@@ -107,7 +115,7 @@ class AddReminderPage extends StatelessWidget {
                     labelText: 'Consumption Interval',
                     hintText: '5 (hours)',
                     padding: 0,
-                    controller: TextEditingController(),
+                    controller: addReminder.pillConsumption,
                   ),
                 ),
               ],
@@ -165,20 +173,36 @@ class AddReminderPage extends StatelessWidget {
           ),
 
           ///
-          CustomButton(
-            child: const Text('Simpan'),
-            onTap: () {
-              // showDialog(
-              //   context: context,
-              //   barrierDismissible: false,
-              //   builder: (context) => Dialog(
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //     child: const AlertSection(),
-              //   ),
-              // );
-            },
+          BlocConsumer<AddReminderCubit, AddReminderState>(
+            listener: (context, state) => state.maybeWhen(
+              success: () => showDialog(
+                context: context,
+                builder: (context) => const Dialog(
+                  child: AlertSection(),
+                ),
+              ),
+              orElse: () {
+                return null;
+              },
+            ),
+            builder: (context, state) => state.maybeWhen(
+              loading: () => const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: CustomButton(
+                  child: Text('Loading...'),
+                  onTap: null,
+                ),
+              ),
+              orElse: () => Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CustomButton(
+                  child: const Text('Simpan'),
+                  onTap: () {
+                    context.read<AddReminderCubit>().addReminder();
+                  },
+                ),
+              ),
+            ),
           ),
           kBigVerticalSpacing,
         ],
@@ -192,6 +216,7 @@ class AlertSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final addReminder = context.read<AddReminderCubit>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -209,7 +234,16 @@ class AlertSection extends StatelessWidget {
           child: CustomButton(
             child: const Text('Simpan'),
             onTap: () {
-              UserPillRepository.createUserPill();
+              addReminder.pillName.clear();
+              addReminder.pillAmount.clear();
+              addReminder.pillTime.clear();
+              addReminder.pillTimes.clear();
+              addReminder.time = null;
+              addReminder.day = 1;
+              addReminder.pillConsumption.clear();
+              addReminder.selectedCategory = null;
+              Navigator.pop(context);
+              Navigator.pop(context);
               context.read<ReminderCubit>().getPill(
                     DateFormat('yyyy-MM-dd').format(
                       DateTime.now(),
@@ -217,7 +251,7 @@ class AlertSection extends StatelessWidget {
                   );
             },
           ),
-        )
+        ),
       ],
     );
   }

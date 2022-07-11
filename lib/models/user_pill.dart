@@ -1,5 +1,5 @@
 class UserPill {
-  final int id;
+  final int? id;
   final String name;
   final int amount;
   final String date;
@@ -7,7 +7,7 @@ class UserPill {
   final int type;
 
   UserPill({
-    required this.id,
+    this.id,
     required this.name,
     required this.amount,
     required this.date,

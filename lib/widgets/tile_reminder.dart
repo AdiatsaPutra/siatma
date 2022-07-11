@@ -51,7 +51,7 @@ class TileReminder extends StatelessWidget {
                         Text(
                           userPill.time,
                           style: kBodyText.copyWith(
-                            color: Colors.grey[600],
+                            color: Colors.grey,
                           ),
                         )
                       ],

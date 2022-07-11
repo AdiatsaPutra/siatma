@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:si_atma/core/custom_exception.dart';
 import 'package:si_atma/models/user_pill.dart';
+import 'package:si_atma/models/user_pill_request.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class UserPillRepository {
@@ -11,8 +12,8 @@ class UserPillRepository {
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         name TEXT,
         amount INTEGER,
-        date TIMESTAMP,
-        time TIMESTAMP,
+        date TEXT,
+        time TEXT,
         type INTEGER,
         createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
@@ -29,23 +30,24 @@ class UserPillRepository {
     );
   }
 
-  static Future<Either<CustomException, void>> createUserPill() async {
+  static Future<Either<CustomException, void>> createUserPill(
+      UserPillRequest userPill) async {
     try {
       final db = await UserPillRepository.db();
       //times a day
-      for (var t = 0; t < 3; t++) {
+      for (var t = 0; t < userPill.timePerDay; t++) {
         //for how many days
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < userPill.timeLasting; i++) {
           final data = {
-            'name': 'pill',
-            'amount': 3,
+            'name': userPill.name,
+            'amount': userPill.amount,
             'date': DateFormat('yyyy-MM-dd').format(
-              DateTime.now().add(Duration(days: i)),
+              userPill.time.add(Duration(days: i)),
             ),
             'time': DateFormat('HH:mm').format(
-              DateTime.now().add(Duration(hours: t)),
+              userPill.time.add(Duration(hours: t)),
             ),
-            'type': 1,
+            'type': userPill.type,
           };
           await db.insert('Userpills', data);
         }
@@ -66,6 +68,7 @@ class UserPillRepository {
         where: 'date = ?',
         whereArgs: [date],
       );
+      Logger().i(userPill);
       final u = userPill.map((e) => UserPill.fromJson(e)).toList();
       return Right(u);
     } catch (e) {
