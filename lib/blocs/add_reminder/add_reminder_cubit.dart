@@ -17,6 +17,7 @@ class AddReminderCubit extends Cubit<AddReminderState> {
   final pillTime = TextEditingController();
   final pillTimes = TextEditingController();
   final pillConsumption = TextEditingController();
+  final key = GlobalKey<FormState>();
 
   DateTime? time;
 

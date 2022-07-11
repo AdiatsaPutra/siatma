@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:logger/logger.dart';
 import 'package:si_atma/repositories/user_pill_repository.dart';
 
 import '../../models/user_pill.dart';

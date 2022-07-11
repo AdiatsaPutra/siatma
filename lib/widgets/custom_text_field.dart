@@ -7,6 +7,8 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final String? Function(String?)? validator;
   final double? padding;
+  final bool? enabled;
+  final TextInputType? keyboardType;
 
   const CustomTextField(
       {Key? key,
@@ -15,7 +17,9 @@ class CustomTextField extends StatelessWidget {
       required this.hintText,
       required this.controller,
       this.validator,
-      this.padding})
+      this.padding,
+      this.enabled,
+      this.keyboardType})
       : super(key: key);
 
   @override
@@ -26,6 +30,8 @@ class CustomTextField extends StatelessWidget {
         validator: validator,
         controller: controller,
         maxLines: maxLines,
+        enabled: enabled ?? true,
+        keyboardType: keyboardType,
         onChanged: (value) {},
         decoration: InputDecoration(
           border: const OutlineInputBorder(
