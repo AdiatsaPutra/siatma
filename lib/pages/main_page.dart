@@ -22,6 +22,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final addReminder = context.read<AddReminderCubit>();
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -72,6 +73,14 @@ class _MainPageState extends State<MainPage> {
                   color: Color(0xff3152FF),
                 ),
                 onTap: () {
+                  addReminder.pillName.clear();
+                  addReminder.pillAmount.clear();
+                  addReminder.pillTime.clear();
+                  addReminder.pillTimes.clear();
+                  addReminder.time = null;
+                  addReminder.day = 1;
+                  addReminder.pillConsumption.clear();
+                  addReminder.selectedCategory = null;
                   Navigator.pushNamed(context, addReminderPage);
                 },
               ),

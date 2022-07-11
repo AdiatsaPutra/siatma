@@ -36,7 +36,7 @@ class AddReminderPage extends StatelessWidget {
                 labelText: 'Time',
                 onChange: (v) {
                   addReminder.setDate(v!);
-                  return null;
+                  //  return null;
                 },
                 hintText: '07:00',
               );
@@ -234,14 +234,14 @@ class AlertSection extends StatelessWidget {
           child: CustomButton(
             child: const Text('Simpan'),
             onTap: () {
-              addReminder.pillName.clear();
-              addReminder.pillAmount.clear();
-              addReminder.pillTime.clear();
-              addReminder.pillTimes.clear();
-              addReminder.time = null;
-              addReminder.day = 1;
-              addReminder.pillConsumption.clear();
-              addReminder.selectedCategory = null;
+              // addReminder.pillName.clear();
+              // addReminder.pillAmount.clear();
+              // addReminder.pillTime.clear();
+              // addReminder.pillTimes.clear();
+              // //  addReminder.time = null;
+              // addReminder.day = 1;
+              // addReminder.pillConsumption.clear();
+              // addReminder.selectedCategory = null;
               Navigator.pop(context);
               Navigator.pop(context);
               context.read<ReminderCubit>().getPill(
