@@ -33,22 +33,69 @@ class UserRepository {
 
       final data = {'name': name, 'password': password};
 
-      final id = await db.insert('users', data,
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+
+      final id = sharedPreferences.getString('id');
+
+      var userInitial = User(
+        id: 0,
+        name: '',
+        password: '',
+        createdAt: '',
+      );
+
+      if (id != null) {
+        final user = await db.query(
+          'users',
+          where: "id = ?",
+          whereArgs: [int.parse(id)],
+          limit: 1,
+        );
+        final u = User.fromJson(user.first);
+        userInitial = u;
+      }
+
+      final idResult = await db.insert('users', data,
           conflictAlgorithm: sql.ConflictAlgorithm.replace);
 
       final user = await db.query(
         'users',
         where: "id = ?",
-        whereArgs: [id],
+        whereArgs: [idResult],
+        limit: 1,
+      );
+      final u = User.fromJson(user.first);
+
+      userInitial = u;
+
+      sharedPreferences.setString('id', u.id.toString());
+      sharedPreferences.setString('name', u.name);
+      sharedPreferences.setString('password', u.password);
+
+      return Right(userInitial);
+    } catch (e) {
+      return Left(CustomException(e.toString()));
+    }
+  }
+
+  static Future<Either<CustomException, User>> profile() async {
+    try {
+      final db = await UserRepository.db();
+
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+
+      final id = sharedPreferences.getString('id');
+
+      final user = await db.query(
+        'users',
+        where: "id = ?",
+        whereArgs: [int.parse(id!)],
         limit: 1,
       );
 
       final u = User.fromJson(user.first);
-
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.setString('name', u.name);
-      sharedPreferences.setString('password', u.password);
 
       return Right(u);
     } catch (e) {

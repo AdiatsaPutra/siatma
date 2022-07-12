@@ -16,9 +16,26 @@ class UserCubit extends Cubit<UserState> {
   final name = TextEditingController();
   final password = TextEditingController();
 
+  bool isObscure = true;
+
+  void setObscure() {
+    emit(const UserState.loading());
+    isObscure = !isObscure;
+    emit(const UserState.tapped());
+  }
+
   void login() async {
     emit(const UserState.loading());
     final user = await UserRepository.login(name.text, password.text);
+    user.fold(
+      (l) => emit(UserState.error(l.message)),
+      (r) => emit(UserState.loaded(r)),
+    );
+  }
+
+  void profile() async {
+    emit(const UserState.loading());
+    final user = await UserRepository.profile();
     user.fold(
       (l) => emit(UserState.error(l.message)),
       (r) => emit(UserState.loaded(r)),

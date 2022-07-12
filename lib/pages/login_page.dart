@@ -5,7 +5,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.read<UserCubit>();
+    final login = context.read<UserCubit>();
     return Scaffold(
       body: Stack(
         children: [
@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           Form(
-            key: user.key,
+            key: login.key,
             child: Positioned(
               bottom: 0,
               child: ClipRRect(
@@ -54,34 +54,59 @@ class LoginPage extends StatelessWidget {
                           }
                           return null;
                         },
-                        controller: user.name,
+                        controller: login.name,
                         labelText: 'Name',
                         hintText: 'John',
                       ),
                       kMediumVerticalSpacing,
 
                       ///
-                      CustomTextField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Password is required';
-                          }
-                          return null;
+                      BlocBuilder<UserCubit, UserState>(
+                        builder: (context, state) {
+                          return CustomTextField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password is required';
+                              }
+                              if (int.parse(value) < 6) {
+                                return 'Minimum 6 digits';
+                              }
+                              return null;
+                            },
+                            controller: login.password,
+                            labelText: 'Password',
+                            hintText: 'Minimum 6 Digits',
+                            isObscure: login.isObscure,
+                            maxLines: 1,
+                            suffix: GestureDetector(
+                              onTap: () {
+                                login.setObscure();
+                              },
+                              child: Icon(
+                                login.isObscure
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          );
                         },
-                        controller: user.password,
-                        labelText: 'Password',
-                        hintText: 'Minimum 6 Digits',
                       ),
                       kMediumVerticalSpacing,
 
                       ///
                       BlocConsumer<UserCubit, UserState>(
                         listener: (context, state) => state.maybeWhen(
-                          loaded: (user) => Navigator.pushNamed(
-                            context,
-                            mainPage,
-                            arguments: user,
-                          ),
+                          loaded: (user) {
+                            login.name.clear();
+                            login.password.clear();
+                            Navigator.pushNamed(
+                              context,
+                              mainPage,
+                              arguments: user,
+                            );
+                            return null;
+                          },
                           orElse: () {
                             return null;
                           },
@@ -94,8 +119,8 @@ class LoginPage extends StatelessWidget {
                           orElse: () => CustomButton(
                             child: const Text('Simpan'),
                             onTap: () {
-                              if (user.key.currentState!.validate()) {
-                                user.login();
+                              if (login.key.currentState!.validate()) {
+                                login.login();
                               }
                             },
                           ),

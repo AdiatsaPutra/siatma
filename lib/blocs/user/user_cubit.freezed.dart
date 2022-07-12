@@ -20,6 +20,7 @@ mixin _$UserState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() tapped,
     required TResult Function(User user) loaded,
     required TResult Function(String message) error,
   }) =>
@@ -28,6 +29,7 @@ mixin _$UserState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
   }) =>
@@ -36,6 +38,7 @@ mixin _$UserState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -45,6 +48,7 @@ mixin _$UserState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Tapped value) tapped,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) =>
@@ -53,6 +57,7 @@ mixin _$UserState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
   }) =>
@@ -61,6 +66,7 @@ mixin _$UserState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -124,6 +130,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() tapped,
     required TResult Function(User user) loaded,
     required TResult Function(String message) error,
   }) {
@@ -135,6 +142,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
   }) {
@@ -146,6 +154,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -161,6 +170,7 @@ class _$_Initial implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Tapped value) tapped,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) {
@@ -172,6 +182,7 @@ class _$_Initial implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
   }) {
@@ -183,6 +194,7 @@ class _$_Initial implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -239,6 +251,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() tapped,
     required TResult Function(User user) loaded,
     required TResult Function(String message) error,
   }) {
@@ -250,6 +263,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
   }) {
@@ -261,6 +275,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -276,6 +291,7 @@ class _$_Loading implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Tapped value) tapped,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) {
@@ -287,6 +303,7 @@ class _$_Loading implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
   }) {
@@ -298,6 +315,7 @@ class _$_Loading implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -311,6 +329,126 @@ class _$_Loading implements _Loading {
 
 abstract class _Loading implements UserState {
   const factory _Loading() = _$_Loading;
+}
+
+/// @nodoc
+abstract class _$$_TappedCopyWith<$Res> {
+  factory _$$_TappedCopyWith(_$_Tapped value, $Res Function(_$_Tapped) then) =
+      __$$_TappedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_TappedCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
+    implements _$$_TappedCopyWith<$Res> {
+  __$$_TappedCopyWithImpl(_$_Tapped _value, $Res Function(_$_Tapped) _then)
+      : super(_value, (v) => _then(v as _$_Tapped));
+
+  @override
+  _$_Tapped get _value => super._value as _$_Tapped;
+}
+
+/// @nodoc
+
+class _$_Tapped implements _Tapped {
+  const _$_Tapped();
+
+  @override
+  String toString() {
+    return 'UserState.tapped()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Tapped);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() tapped,
+    required TResult Function(User user) loaded,
+    required TResult Function(String message) error,
+  }) {
+    return tapped();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? tapped,
+    TResult Function(User user)? loaded,
+    TResult Function(String message)? error,
+  }) {
+    return tapped?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? tapped,
+    TResult Function(User user)? loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (tapped != null) {
+      return tapped();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Tapped value) tapped,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+  }) {
+    return tapped(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+  }) {
+    return tapped?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (tapped != null) {
+      return tapped(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Tapped implements UserState {
+  const factory _Tapped() = _$_Tapped;
 }
 
 /// @nodoc
@@ -377,6 +515,7 @@ class _$_Loaded implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() tapped,
     required TResult Function(User user) loaded,
     required TResult Function(String message) error,
   }) {
@@ -388,6 +527,7 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
   }) {
@@ -399,6 +539,7 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -414,6 +555,7 @@ class _$_Loaded implements _Loaded {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Tapped value) tapped,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) {
@@ -425,6 +567,7 @@ class _$_Loaded implements _Loaded {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
   }) {
@@ -436,6 +579,7 @@ class _$_Loaded implements _Loaded {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -520,6 +664,7 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() tapped,
     required TResult Function(User user) loaded,
     required TResult Function(String message) error,
   }) {
@@ -531,6 +676,7 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
   }) {
@@ -542,6 +688,7 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? tapped,
     TResult Function(User user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -557,6 +704,7 @@ class _$_Error implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_Tapped value) tapped,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) {
@@ -568,6 +716,7 @@ class _$_Error implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
   }) {
@@ -579,6 +728,7 @@ class _$_Error implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_Tapped value)? tapped,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),

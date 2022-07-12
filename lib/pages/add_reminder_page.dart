@@ -87,7 +87,6 @@ class AddReminderPage extends StatelessWidget {
                           value: addReminder.day,
                           max: 50,
                           min: 1,
-                          label: 'Iwant',
                           onChanged: (v) {
                             addReminder.setWeek(v);
                           },
@@ -245,22 +244,51 @@ class AddReminderPage extends StatelessWidget {
                 },
               ),
               builder: (context, state) => state.maybeWhen(
-                loading: () => const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: CustomButton(
-                    child: Text('Loading...'),
-                    onTap: null,
-                  ),
+                loading: () => const CustomButton(
+                  child: Text('Loading...'),
+                  onTap: null,
                 ),
-                orElse: () => Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: CustomButton(
-                      child: const Text('Simpan'),
-                      onTap: () {
-                        if (addReminder.key.currentState!.validate()) {
-                          context.read<AddReminderCubit>().addReminder();
-                        }
-                      }),
+                orElse: () => CustomButton(
+                  child: const Text('Simpan'),
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                    if (addReminder.key.currentState!.validate()) {
+                      if (int.parse(addReminder.pillTimes.text) > 1 &&
+                          int.parse(addReminder.pillConsumption.text) < 1) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(
+                              'Consumption interval must not be 0',
+                            ),
+                          ),
+                        );
+                      }
+                      if (addReminder.selectedCategory == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(
+                              'Please choose pill category',
+                            ),
+                          ),
+                        );
+                      }
+                      if (int.parse(addReminder.pillTimes.text) == 1 &&
+                          int.parse(addReminder.pillConsumption.text) > 0) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(
+                              'Times per day must not be lower than interval',
+                            ),
+                          ),
+                        );
+                      } else {
+                        context.read<AddReminderCubit>().addReminder();
+                      }
+                    }
+                  },
                 ),
               ),
             ),
@@ -289,20 +317,17 @@ class AlertSection extends StatelessWidget {
           'Reminder Ditambah',
           style: kBigTextBold,
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: CustomButton(
-            child: const Text('Simpan'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-              context.read<ReminderCubit>().getPill(
-                    DateFormat('yyyy-MM-dd').format(
-                      DateTime.now(),
-                    ),
-                  );
-            },
-          ),
+        CustomButton(
+          child: const Text('Simpan'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+            context.read<ReminderCubit>().getPill(
+                  DateFormat('yyyy-MM-dd').format(
+                    DateTime.now(),
+                  ),
+                );
+          },
         ),
       ],
     );

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => UserCubit(),
+          create: (context) => UserCubit()..profile(),
         ),
         BlocProvider(
           create: (context) => ReminderCubit()

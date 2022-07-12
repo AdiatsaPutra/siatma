@@ -9,18 +9,22 @@ class CustomTextField extends StatelessWidget {
   final double? padding;
   final bool? enabled;
   final TextInputType? keyboardType;
+  final bool isObscure;
+  final Widget? suffix;
 
-  const CustomTextField(
-      {Key? key,
-      this.maxLines,
-      required this.labelText,
-      required this.hintText,
-      required this.controller,
-      this.validator,
-      this.padding,
-      this.enabled,
-      this.keyboardType})
-      : super(key: key);
+  const CustomTextField({
+    Key? key,
+    this.maxLines,
+    required this.labelText,
+    required this.hintText,
+    required this.controller,
+    this.validator,
+    this.padding,
+    this.enabled,
+    this.keyboardType,
+    this.isObscure = false,
+    this.suffix,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,7 @@ class CustomTextField extends StatelessWidget {
         enabled: enabled ?? true,
         keyboardType: keyboardType,
         onChanged: (value) {},
+        obscureText: isObscure,
         decoration: InputDecoration(
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(
@@ -53,19 +58,11 @@ class CustomTextField extends StatelessWidget {
             borderSide: BorderSide(color: Colors.transparent, width: 2),
           ),
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          isDense: true,
-          contentPadding: const EdgeInsets.fromLTRB(15, 15, 0, 10),
           labelText: labelText,
+          isDense: true,
           labelStyle: TextStyle(color: kPrimaryColor),
           hintText: hintText,
-          suffix: GestureDetector(
-            onTap: () {},
-            child: const Padding(
-              padding: EdgeInsets.only(
-                right: 10,
-              ),
-            ),
-          ),
+          suffixIcon: suffix,
           hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
           filled: true,
           fillColor: const Color(0xffF0F4F4),
