@@ -4,7 +4,10 @@ import 'package:logger/logger.dart';
 import 'package:si_atma/core/custom_exception.dart';
 import 'package:si_atma/models/user_pill.dart';
 import 'package:si_atma/models/user_pill_request.dart';
+import 'package:si_atma/notification/notification_service.dart';
 import 'package:sqflite/sqflite.dart' as sql;
+
+import '../models/user.dart';
 
 class UserPillRepository {
   static Future<void> createTables(sql.Database database) async {
@@ -31,11 +34,12 @@ class UserPillRepository {
   }
 
   static Future<Either<CustomException, void>> createUserPill(
-      UserPillRequest userPill) async {
+      User u, UserPillRequest userPill) async {
     try {
       final db = await UserPillRepository.db();
       //times a day
       for (var t = 0; t < userPill.timePerDay; t++) {
+        NotificationService().scheduleNotifications(u, userPill);
         //for how many days
         for (var i = 0; i < userPill.timeLasting; i++) {
           final data = {

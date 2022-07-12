@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
+import 'package:si_atma/models/user.dart';
 import 'package:si_atma/models/user_pill_request.dart';
 
 import '../../repositories/user_pill_repository.dart';
@@ -43,7 +44,7 @@ class AddReminderCubit extends Cubit<AddReminderState> {
     emit(const AddReminderState.loaded());
   }
 
-  void addReminder() async {
+  void addReminder(User u) async {
     emit(const AddReminderState.loading());
     final request = UserPillRequest(
       name: pillName.text,
@@ -54,7 +55,7 @@ class AddReminderCubit extends Cubit<AddReminderState> {
       interval: int.parse(pillConsumption.text),
       type: selectedCategory!,
     );
-    final reminder = await UserPillRepository.createUserPill(request);
+    final reminder = await UserPillRepository.createUserPill(u, request);
     reminder.fold(
       (l) => emit(AddReminderState.error(l.message)),
       (r) => emit(const AddReminderState.success()),

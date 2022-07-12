@@ -16,6 +16,13 @@ class UserCubit extends Cubit<UserState> {
   final name = TextEditingController();
   final password = TextEditingController();
 
+  User u = User(
+    id: 0,
+    name: '',
+    password: '',
+    createdAt: '',
+  );
+
   bool isObscure = true;
 
   void setObscure() {
@@ -29,7 +36,10 @@ class UserCubit extends Cubit<UserState> {
     final user = await UserRepository.login(name.text, password.text);
     user.fold(
       (l) => emit(UserState.error(l.message)),
-      (r) => emit(UserState.loaded(r)),
+      (r) {
+        u = r;
+        emit(UserState.loaded(r));
+      },
     );
   }
 
@@ -38,7 +48,10 @@ class UserCubit extends Cubit<UserState> {
     final user = await UserRepository.profile();
     user.fold(
       (l) => emit(UserState.error(l.message)),
-      (r) => emit(UserState.loaded(r)),
+      (r) {
+        u = r;
+        emit(UserState.loaded(r));
+      },
     );
   }
 }

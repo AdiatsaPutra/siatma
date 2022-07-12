@@ -9,8 +9,11 @@ import 'package:si_atma/blocs/user/user_cubit.dart';
 import 'package:si_atma/constants/constants.dart';
 import 'package:si_atma/constants/routes.dart';
 
-void main() {
+import 'notification/notification_service.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().init();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

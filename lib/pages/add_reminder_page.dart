@@ -219,7 +219,6 @@ class AddReminderPage extends StatelessWidget {
                                       color: Colors.grey[200]!,
                                     )
                                   ]),
-                              //   child: Image.asset('assets/kapsul.jpg'),
                             ),
                           );
                         },
@@ -285,7 +284,9 @@ class AddReminderPage extends StatelessWidget {
                           ),
                         );
                       } else {
-                        context.read<AddReminderCubit>().addReminder();
+                        context
+                            .read<AddReminderCubit>()
+                            .addReminder(context.read<UserCubit>().u);
                       }
                     }
                   },

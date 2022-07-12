@@ -41,17 +41,6 @@ class HomePage extends StatelessWidget {
               orElse: () => const SizedBox(),
             ),
           ),
-
-          // Column(
-          //   children: generateReminderWidgets(context, dateList: todayCategory),
-          // ),
-          // ReminderDay(
-          //   date: '',
-          // ),
-          // Column(
-          //   children:
-          //       generateReminderWidgets(context, dateList: yesterdayCategory),
-          // ),
           const SizedBox(
             height: 20,
           )
@@ -59,38 +48,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
-  // List<Widget> generateReminderWidgets(BuildContext context,
-  //     {required List dateList}) {
-  //   return dateList //masing masing elemen ada HelpUsContainer
-  //       .map(
-  //         (e) => CardReminder(
-  //           ketentuan: e, //elemen dari llist genre
-  //           isSelected:
-  //               selectedCategory.contains(e), //isSelectednya true kalo dipencet
-  //           onTap: () {
-  //             onSelectCategory(e); //genre yg ditap
-  //           }, // ketentuan: '',
-  //         ),
-  //       )
-  //       .toList();
-  // }
-
-  // void onSelectCategory(int help) {
-  //   if (selectedCategory.contains(help)) {
-  //     //kalo udah ada berarti hapus category
-  //     setState(() {
-  //       selectedCategory.remove(help);
-  //     });
-  //   } else {
-  //     if (selectedCategory.length < 10) {
-  //       //berarti pilih 4
-  //       setState(() {
-  //         selectedCategory.add(help);
-  //       });
-  //     }
-  //   }
-  // }
 }
 
 class ReminderDay extends StatelessWidget {
