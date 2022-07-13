@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:si_atma/core/custom_exception.dart';
 import 'package:si_atma/models/user_pill.dart';
 import 'package:si_atma/models/user_pill_request.dart';
@@ -17,6 +19,7 @@ class UserPillRepository {
         date TEXT,
         time TEXT,
         type INTEGER,
+        isDone BOOLEAN
         createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
       """);
@@ -32,6 +35,7 @@ class UserPillRepository {
     );
   }
 
+  ///CREATE
   static Future<Either<CustomException, void>> createUserPill(
       User u, UserPillRequest userPill) async {
     try {
@@ -54,16 +58,20 @@ class UserPillRepository {
               ),
             ),
             'type': userPill.type,
+            'isDone': false
           };
           await db.insert('Userpills', data);
+          debugPrint(data.toString());
         }
       }
+
       return const Right(null);
     } catch (e) {
       return Left(CustomException(e.toString()));
     }
   }
 
+  ///READ
   static Future<Either<CustomException, List<UserPill>>> getUserPill(
     String date,
   ) async {
@@ -76,6 +84,55 @@ class UserPillRepository {
       );
       final u = userPill.map((e) => UserPill.fromJson(e)).toList();
       return Right(u);
+    } catch (e) {
+      return Left(CustomException(e.toString()));
+    }
+  }
+
+  ///DELETE
+  static Future<Either<CustomException, void>> deleteUserPill(int? id) async {
+    try {
+      final db = await UserPillRepository.db();
+
+      final delete =
+          await db.delete("Userpills", where: "id = ?", whereArgs: [id]);
+      Logger().i(delete);
+      return const Right(null);
+    } catch (e) {
+      return Left(CustomException(e.toString()));
+    }
+  }
+
+  static Future<Either<CustomException, void>> updateUserPill(
+      int? id, UserPillRequest userPill) async {
+    try {
+      final db = await UserPillRepository.db();
+      for (var t = 0; t < userPill.timePerDay; t++) {
+        //for how many days
+        for (var i = 0; i < userPill.timeLasting; i++) {
+          final data = {
+            'name': userPill.name,
+            'amount': userPill.amount,
+            'date': DateFormat('yyyy-MM-dd').format(
+              userPill.time.add(Duration(days: i)),
+            ),
+            'time': DateFormat('HH:mm').format(
+              userPill.time.add(
+                Duration(hours: t * userPill.interval),
+              ),
+            ),
+            'type': userPill.type,
+            'isDone': false,
+            'createdAt': DateTime.now().toString()
+          };
+
+          final result = await db
+              .update('Userpills', data, where: "id = ?", whereArgs: [id]);
+
+          debugPrint(result.toString());
+        }
+      }
+      return const Right(null);
     } catch (e) {
       return Left(CustomException(e.toString()));
     }

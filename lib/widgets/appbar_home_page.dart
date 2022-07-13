@@ -27,7 +27,7 @@ class AppBarHomePage extends StatelessWidget {
               kBiggestVerticalSpacing,
               Center(
                 child: Text(
-                  'Reminders',
+                  'Pengingat',
                   style: kMediumTextBold.copyWith(color: Colors.white),
                 ),
               ),
@@ -50,7 +50,7 @@ class AppBarHomePage extends StatelessWidget {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Text('Are you sure want to logout?'),
+                                const Text('Anda yakin akan tutup aplikasi??'),
                                 kBigVerticalSpacing,
                                 Row(
                                   children: [
@@ -59,7 +59,7 @@ class AppBarHomePage extends StatelessWidget {
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
-                                        child: const Text('No'),
+                                        child: const Text('Jangan'),
                                       ),
                                     ),
                                     kBigHorizontalSpacing,
@@ -76,7 +76,7 @@ class AppBarHomePage extends StatelessWidget {
                                           Navigator.pushReplacementNamed(
                                               context, login);
                                         },
-                                        child: const Text('Yes'),
+                                        child: const Text('Ya, tutup'),
                                       ),
                                     ),
                                   ],
@@ -88,7 +88,7 @@ class AppBarHomePage extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      'Logout',
+                      'Keluar',
                       style: kSmallText.copyWith(color: Colors.white),
                     ),
                   ),
@@ -96,7 +96,7 @@ class AppBarHomePage extends StatelessWidget {
               ),
               kSmallestVerticalSpacing,
               Text(
-                'Here are your medicine reminders ',
+                'Jadwal minum obatmu tersedia di sini',
                 style: kSmallText.copyWith(color: Colors.white),
               ),
               kBigVerticalSpacing,

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:si_atma/models/user.dart';
 import 'package:si_atma/models/user_pill_request.dart';
 
+import '../../models/user_pill.dart';
 import '../../repositories/user_pill_repository.dart';
 
 part 'add_reminder_state.dart';
@@ -19,9 +20,9 @@ class AddReminderCubit extends Cubit<AddReminderState> {
   final pillTimes = TextEditingController();
   final pillConsumption = TextEditingController();
   final key = GlobalKey<FormState>();
-
+  bool isDone = false;
   DateTime? time;
-
+  int? id;
   double day = 1;
   int? selectedCategory;
 
@@ -47,16 +48,48 @@ class AddReminderCubit extends Cubit<AddReminderState> {
   void addReminder(User u) async {
     emit(const AddReminderState.loading());
     final request = UserPillRequest(
-      name: pillName.text,
-      amount: int.parse(pillAmount.text),
-      time: time!,
-      timeLasting: day.toInt(),
-      timePerDay: int.parse(pillTimes.text),
-      interval: int.parse(pillConsumption.text),
-      type: selectedCategory!,
-    );
+        name: pillName.text,
+        amount: int.parse(pillAmount.text),
+        time: time!,
+        timeLasting: day.toInt(),
+        timePerDay: int.parse(pillTimes.text),
+        interval: int.parse(pillConsumption.text),
+        type: selectedCategory!,
+        isDone: isDone);
+
     final reminder = await UserPillRepository.createUserPill(u, request);
     reminder.fold(
+      (l) => emit(AddReminderState.error(l.message)),
+      (r) => emit(const AddReminderState.success()),
+    );
+  }
+
+  void deleteReminder(UserPill userPill) async {
+    emit(const AddReminderState.loading());
+    final delete = await UserPillRepository.deleteUserPill(userPill.id);
+    delete.fold(
+      (l) => emit(AddReminderState.error(l.message)),
+      (r) => emit(const AddReminderState.success()),
+    );
+  }
+
+  void editReminder(
+    UserPill userPill,
+  ) async {
+    emit(const AddReminderState.loading());
+    final request = UserPillRequest(
+        name: pillName.text,
+        amount: int.parse(pillAmount.text),
+        time: time!,
+        timeLasting: day.toInt(),
+        timePerDay: int.parse(pillTimes.text),
+        interval: int.parse(pillConsumption.text),
+        type: selectedCategory!,
+        isDone: isDone);
+
+    final update =
+        await UserPillRepository.updateUserPill(userPill.id, request);
+    update.fold(
       (l) => emit(AddReminderState.error(l.message)),
       (r) => emit(const AddReminderState.success()),
     );

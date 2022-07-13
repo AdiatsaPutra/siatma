@@ -17,7 +17,7 @@ class EmptyReminder extends StatelessWidget {
           ),
           kMediumVerticalSpacing,
           Text(
-            'No reminder yet',
+            'Ups, anda belum membuat pengingat',
             style: kMediumTextBold,
           ),
         ],

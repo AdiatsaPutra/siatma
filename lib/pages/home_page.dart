@@ -1,10 +1,16 @@
 part of 'pages.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
+    final addReminder = context.read<AddReminderCubit>();
     final user = ModalRoute.of(context)!.settings.arguments as User;
     return Scaffold(
       appBar: PreferredSize(
@@ -30,8 +36,15 @@ class HomePage extends StatelessWidget {
                       (e) {
                         return TileReminder(
                           userPill: e,
-                          isSelected: true,
-                          onTap: () {},
+                          onTapDelete: () {
+                            addReminder.deleteReminder(e);
+                          },
+                          icon: Icon(addReminder.isDone == false
+                              ? Icons.circle_outlined
+                              : Icons.check_circle),
+                          onTapDone: () {
+                            addReminder.editReminder(e);
+                          },
                         );
                       },
                     )

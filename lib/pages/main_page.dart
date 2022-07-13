@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
                     )
                   ],
                 ),
-                label: 'Reminders',
+                label: 'Pengingat',
               ),
               BottomNavigationBarItem(
                 icon: Column(

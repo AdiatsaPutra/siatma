@@ -7,7 +7,7 @@ class AddReminderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final addReminder = context.read<AddReminderCubit>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Add pill')),
+      appBar: AppBar(title: const Text('Tambah pil')),
       body: Form(
         key: addReminder.key,
         child: ListView(
@@ -18,13 +18,13 @@ class AddReminderPage extends StatelessWidget {
             CustomTextField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Pill Name is required';
+                  return 'Nama pil wajib diisi';
                 }
                 return null;
               },
               controller: addReminder.pillName,
-              labelText: 'Pill name',
-              hintText: 'eg: Pil KB',
+              labelText: 'Nama pil',
+              hintText: 'contoh: Pil KB',
             ),
             kMediumVerticalSpacing,
 
@@ -32,12 +32,12 @@ class AddReminderPage extends StatelessWidget {
             CustomTextField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Pill Amount is required';
+                    return 'Jumlah pil wajib diisi';
                   }
                   return null;
                 },
                 controller: addReminder.pillAmount,
-                labelText: 'Pill amount',
+                labelText: 'Jumlah pil',
                 hintText: '1',
                 keyboardType: TextInputType.number),
             kMediumVerticalSpacing,
@@ -48,12 +48,12 @@ class AddReminderPage extends StatelessWidget {
                 return CustomDatePicker(
                   validator: (v) {
                     if (v == null) {
-                      return 'Please set the time';
+                      return 'Atur waktu';
                     }
                     return null;
                   },
                   controller: addReminder.pillTime,
-                  labelText: 'Time',
+                  labelText: 'Waktu',
                   onChange: (v) {
                     addReminder.setDate(v!);
                     return null;
@@ -67,7 +67,7 @@ class AddReminderPage extends StatelessWidget {
             ///
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('How long this reminder will last?',
+              child: Text('Berapa hari anda atur pengingat ini?',
                   style: kBodyTextBold),
             ),
             Padding(
@@ -130,7 +130,7 @@ class AddReminderPage extends StatelessWidget {
             ///
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Times per day', style: kBodyTextBold),
+              child: Text('Waktu per hari', style: kBodyTextBold),
             ),
             kMediumVerticalSpacing,
             Padding(
@@ -141,11 +141,11 @@ class AddReminderPage extends StatelessWidget {
                     child: CustomTextField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Frequence is needed';
+                            return 'Frekuensi wajib diisi';
                           }
                           return null;
                         },
-                        labelText: 'How many times',
+                        labelText: 'Berapa kali konsumsi',
                         hintText: '1x',
                         padding: 0,
                         controller: addReminder.pillTimes,
@@ -157,12 +157,12 @@ class AddReminderPage extends StatelessWidget {
                       child: CustomTextField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Frequence is needed';
+                            return 'Rentang wajib diisi';
                           }
                           return null;
                         },
-                        labelText: 'Consumption Interval',
-                        hintText: '5 (hours)',
+                        labelText: 'Rentang konsumsi obat',
+                        hintText: '5 (jam)',
                         padding: 0,
                         controller: addReminder.pillConsumption,
                         keyboardType: addReminder.pillTimes.toString() == '1'
@@ -182,7 +182,7 @@ class AddReminderPage extends StatelessWidget {
             ///
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Pill type', style: kBodyTextBold),
+              child: Text('Tipe pil', style: kBodyTextBold),
             ),
             SizedBox(
               height: 150,
@@ -266,7 +266,7 @@ class AddReminderPage extends StatelessWidget {
                           const SnackBar(
                             backgroundColor: Colors.red,
                             content: Text(
-                              'Consumption interval must not be 0',
+                              'Rentang konsumsi tidak boleh 0',
                             ),
                           ),
                         );
@@ -276,7 +276,7 @@ class AddReminderPage extends StatelessWidget {
                           const SnackBar(
                             backgroundColor: Colors.red,
                             content: Text(
-                              'Please choose pill category',
+                              'Tipe pil belum anda pilih',
                             ),
                           ),
                         );
@@ -287,7 +287,7 @@ class AddReminderPage extends StatelessWidget {
                           const SnackBar(
                             backgroundColor: Colors.red,
                             content: Text(
-                              'Times per day must not be lower than interval',
+                              'Frekuensi tidak boleh kurang dari atau sama dengan rentang waktu konsumsi',
                             ),
                           ),
                         );

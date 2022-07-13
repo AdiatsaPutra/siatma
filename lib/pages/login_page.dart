@@ -50,12 +50,12 @@ class LoginPage extends StatelessWidget {
                       CustomTextField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Name is required';
+                            return 'Nama wajib diisi';
                           }
                           return null;
                         },
                         controller: login.name,
-                        labelText: 'Name',
+                        labelText: 'Nama',
                         hintText: 'John',
                       ),
                       kMediumVerticalSpacing,
@@ -66,16 +66,16 @@ class LoginPage extends StatelessWidget {
                           return CustomTextField(
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Password is required';
+                                return 'Password wajib diisi';
                               }
                               if (int.parse(value) < 6) {
-                                return 'Minimum 6 digits';
+                                return 'Minimal 6 digit';
                               }
                               return null;
                             },
                             controller: login.password,
                             labelText: 'Password',
-                            hintText: 'Minimum 6 Digits',
+                            hintText: 'Minimal 6 digit',
                             isObscure: login.isObscure,
                             maxLines: 1,
                             suffix: GestureDetector(

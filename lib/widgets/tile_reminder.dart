@@ -2,15 +2,17 @@ part of 'widgets.dart';
 
 class TileReminder extends StatelessWidget {
   final UserPill userPill;
-  final VoidCallback onTap;
-  final bool isSelected;
+  final VoidCallback onTapDone;
+  final Widget icon;
+  final VoidCallback onTapDelete;
 
-  const TileReminder({
-    Key? key,
-    required this.isSelected,
-    required this.onTap,
-    required this.userPill,
-  }) : super(key: key);
+  const TileReminder(
+      {Key? key,
+      required this.onTapDone,
+      required this.userPill,
+      required this.icon,
+      required this.onTapDelete})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,14 @@ class TileReminder extends StatelessWidget {
                         )
                       ],
                     ),
+                    const Spacer(),
+                    GestureDetector(child: icon, onTap: onTapDone),
+                    IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.redAccent,
+                        ),
+                        onPressed: onTapDelete),
                   ],
                 ),
               ),
@@ -74,7 +84,7 @@ class TileReminder extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
-                          'Pil amount: ${userPill.amount}',
+                          'Jumlah pil: ${userPill.amount}',
                           style: kBodyTextBold.copyWith(color: kPrimaryColor),
                         ),
                       ),
