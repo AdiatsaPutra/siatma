@@ -71,6 +71,8 @@ class AppBarHomePage extends StatelessWidget {
                                               await SharedPreferences
                                                   .getInstance();
                                           sharedPreferences.clear();
+                                          NotificationService()
+                                              .clearNotification();
                                           Navigator.pushReplacementNamed(
                                               context, login);
                                         },

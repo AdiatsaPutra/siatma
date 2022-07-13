@@ -48,6 +48,19 @@ class MyApp extends StatelessWidget {
             backgroundColor: kPrimaryColor,
             elevation: 0,
           ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              primary: kPrimaryColor,
+            ),
+          ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(
+                color: kPrimaryColor,
+                width: 2,
+              ),
+            ),
+          ),
         ),
         routes: routes,
       ),

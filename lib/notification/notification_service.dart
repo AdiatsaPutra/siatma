@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logger/logger.dart';
@@ -21,11 +23,9 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
-    //Initialization Settings for Android
     AndroidInitializationSettings initializationSettingsAndroid =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    //InitializationSettings for initializing settings for both platforms (Android & iOS)
     final InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
@@ -53,18 +53,28 @@ class NotificationService {
   );
 
   Future<void> scheduleNotifications(
-      User user, UserPillRequest userPill) async {
+      User user, UserPillRequest userPill, int duration) async {
     try {
+      Logger().i(duration);
       final timezone = tz.getLocation('Asia/Jakarta');
       await flutterLocalNotificationsPlugin.zonedSchedule(
-          0,
+          Random().nextInt(999999),
           "Hi ${user.name}",
           "Lets take your ${userPill.name} medicine",
-          tz.TZDateTime.from(userPill.time, timezone),
+          tz.TZDateTime.from(userPill.time, timezone)
+              .add(Duration(hours: duration)),
           platformChannelSpecifics,
           androidAllowWhileIdle: true,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime);
+    } catch (e) {
+      Logger().i(e);
+    }
+  }
+
+  Future<void> clearNotification() async {
+    try {
+      await flutterLocalNotificationsPlugin.cancelAll();
     } catch (e) {
       Logger().i(e);
     }

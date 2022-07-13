@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
 import 'package:si_atma/core/custom_exception.dart';
 import 'package:si_atma/models/user_pill.dart';
 import 'package:si_atma/models/user_pill_request.dart';
@@ -39,9 +38,10 @@ class UserPillRepository {
       final db = await UserPillRepository.db();
       //times a day
       for (var t = 0; t < userPill.timePerDay; t++) {
-        NotificationService().scheduleNotifications(u, userPill);
         //for how many days
         for (var i = 0; i < userPill.timeLasting; i++) {
+          NotificationService()
+              .scheduleNotifications(u, userPill, t * userPill.interval);
           final data = {
             'name': userPill.name,
             'amount': userPill.amount,
@@ -49,7 +49,9 @@ class UserPillRepository {
               userPill.time.add(Duration(days: i)),
             ),
             'time': DateFormat('HH:mm').format(
-              userPill.time.add(Duration(hours: t)),
+              userPill.time.add(
+                Duration(hours: t * userPill.interval),
+              ),
             ),
             'type': userPill.type,
           };
@@ -72,7 +74,6 @@ class UserPillRepository {
         where: 'date = ?',
         whereArgs: [date],
       );
-      Logger().i(userPill);
       final u = userPill.map((e) => UserPill.fromJson(e)).toList();
       return Right(u);
     } catch (e) {

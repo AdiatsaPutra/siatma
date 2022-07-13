@@ -186,46 +186,54 @@ class AddReminderPage extends StatelessWidget {
             ),
             SizedBox(
               height: 150,
-              child: Expanded(
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    kBigVerticalSpacing,
-                    ...List.generate(
-                      5,
-                      (index) =>
-                          BlocBuilder<AddReminderCubit, AddReminderState>(
-                        builder: (context, state) {
-                          return GestureDetector(
-                            onTap: () {
-                              addReminder.setCategory(index);
-                            },
-                            child: Container(
-                              width: 100,
-                              height: 50,
-                              margin: EdgeInsets.fromLTRB(
-                                  index == 0 ? 20 : 0, 16, 10, 16),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: addReminder.selectedCategory == index
-                                      ? Border.all(
-                                          color: kPrimaryColor, width: 2)
-                                      : null,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 1,
-                                      spreadRadius: 3,
-                                      color: Colors.grey[200]!,
-                                    )
-                                  ]),
-                            ),
-                          );
-                        },
-                      ),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  kBigVerticalSpacing,
+                  ...List.generate(
+                    5,
+                    (index) => BlocBuilder<AddReminderCubit, AddReminderState>(
+                      builder: (context, state) {
+                        return GestureDetector(
+                          onTap: () {
+                            addReminder.setCategory(index);
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            child: Column(children: [
+                              kBigVerticalSpacing,
+                              Image.asset(
+                                buildPillType(context, index),
+                                width: 60,
+                              ),
+                              kSmallVerticalSpacing,
+                              Text(
+                                buildCategory(context, index),
+                                style: kSmallTextBold,
+                              )
+                            ]),
+                            margin: EdgeInsets.fromLTRB(
+                                index == 0 ? 20 : 0, 16, 10, 16),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border: addReminder.selectedCategory == index
+                                    ? Border.all(color: kPrimaryColor, width: 2)
+                                    : null,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 1,
+                                    spreadRadius: 3,
+                                    color: Colors.grey[200]!,
+                                  )
+                                ]),
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
 
@@ -301,6 +309,40 @@ class AddReminderPage extends StatelessWidget {
   }
 }
 
+buildPillType(BuildContext context, int index) {
+  switch (index) {
+    case 0:
+      return 'assets/pills.png';
+    case 1:
+      return 'assets/pills-bottle.png';
+    case 2:
+      return 'assets/cream.png';
+    case 3:
+      return 'assets/injection.png';
+    case 4:
+      return 'assets/eye-dropper.png';
+    default:
+      return '';
+  }
+}
+
+String buildCategory(BuildContext context, int index) {
+  switch (index) {
+    case 0:
+      return 'Tablet';
+    case 1:
+      return 'Capsule';
+    case 2:
+      return 'Cream';
+    case 3:
+      return 'Suntik';
+    case 4:
+      return 'Tetes';
+    default:
+      return '';
+  }
+}
+
 class AlertSection extends StatelessWidget {
   const AlertSection({Key? key}) : super(key: key);
 
@@ -319,7 +361,7 @@ class AlertSection extends StatelessWidget {
           style: kBigTextBold,
         ),
         CustomButton(
-          child: const Text('Simpan'),
+          child: const Text('Ok'),
           onTap: () {
             Navigator.pop(context);
             Navigator.pop(context);
@@ -330,6 +372,7 @@ class AlertSection extends StatelessWidget {
                 );
           },
         ),
+        kBigVerticalSpacing,
       ],
     );
   }

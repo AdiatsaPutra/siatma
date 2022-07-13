@@ -39,9 +39,8 @@ class TileReminder extends StatelessWidget {
                 child: Row(
                   children: [
                     Image.asset(
-                      'assets/pill.jpg',
-                      width: 20,
-                      height: 20,
+                      buildPillType(context, userPill.type),
+                      width: 30,
                     ),
                     kMediumHorizontalSpacing,
                     Column(
@@ -56,21 +55,6 @@ class TileReminder extends StatelessWidget {
                         )
                       ],
                     ),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: onTap,
-                      icon: isSelected
-                          ? const Icon(
-                              Icons.check_circle,
-                              size: 32,
-                              color: Color(0xff47FFE9),
-                            )
-                          : const Icon(
-                              Icons.circle_outlined,
-                              size: 32,
-                              color: Color(0xffF0F4F4),
-                            ),
-                    )
                   ],
                 ),
               ),

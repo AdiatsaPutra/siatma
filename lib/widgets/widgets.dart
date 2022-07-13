@@ -8,6 +8,8 @@ import 'package:si_atma/blocs/reminder/reminder_cubit.dart';
 import 'package:si_atma/constants/routes.dart';
 import 'package:si_atma/models/user.dart';
 import 'package:si_atma/models/user_pill.dart';
+import 'package:si_atma/notification/notification_service.dart';
+import 'package:si_atma/pages/pages.dart';
 
 import '../constants/constants.dart';
 

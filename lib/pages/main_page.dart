@@ -11,7 +11,7 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    EmptyReminder()
+    QuotesPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -33,12 +33,9 @@ class _MainPageState extends State<MainPage> {
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Column(
-                  children: [
-                    Image.asset(
-                      'assets/bar_reminder.jpg',
-                      height: 16,
-                    ),
-                    const SizedBox(
+                  children: const [
+                    Icon(Icons.access_time_rounded),
+                    SizedBox(
                       height: 2,
                     )
                   ],
