@@ -38,13 +38,13 @@ class _HomePageState extends State<HomePage> {
                   child: CircularProgressIndicator(),
                 ),
                 error: (e) => Text(e),
-                loaded: (p) {
-                  if (p.isEmpty) {
+                orElse: () {
+                  if (reminder.userPill.isEmpty) {
                     return const EmptyReminder();
                   }
                   return Column(
                     children: [
-                      ...p.map(
+                      ...reminder.userPill.map(
                         (e) {
                           return TileReminder(
                             userPill: e,
@@ -70,7 +70,6 @@ class _HomePageState extends State<HomePage> {
                     ],
                   );
                 },
-                orElse: () => const SizedBox(),
               ),
             ),
           ),

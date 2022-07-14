@@ -10,12 +10,20 @@ part 'reminder_cubit.freezed.dart';
 class ReminderCubit extends Cubit<ReminderState> {
   ReminderCubit() : super(const ReminderState.initial());
 
+  List<UserPill> userPill = [];
+
   void getPill(String date) async {
     emit(const ReminderState.loading());
     final pill = await UserPillRepository.getUserPill(date);
     pill.fold(
-      (l) => emit(ReminderState.error(l.message)),
-      (r) => emit(ReminderState.loaded(r)),
+      (l) {
+        userPill.clear();
+        emit(ReminderState.error(l.message));
+      },
+      (r) {
+        userPill = r;
+        emit(ReminderState.loaded(userPill));
+      },
     );
   }
 }

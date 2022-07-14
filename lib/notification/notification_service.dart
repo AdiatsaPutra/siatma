@@ -58,8 +58,8 @@ class NotificationService {
         final timezone = tz.getLocation('Asia/Jakarta');
         await flutterLocalNotificationsPlugin.zonedSchedule(
             Random().nextInt(999999),
-            "Hi ${user.name}",
-            "Lets take your ${userPill.name} medicine",
+            "Hai ${user.name}",
+            "Ayo minum pil ${userPill.name} dan ceklis pilmu",
             tz.TZDateTime.from(userPill.time, timezone)
                 .add(Duration(days: i, hours: duration)),
             platformChannelSpecifics,
