@@ -53,14 +53,11 @@ class LoginPage extends StatelessWidget {
                       if (value == null || value.isEmpty) {
                         return 'Password wajib diisi';
                       }
-                      if (int.parse(value) < 6) {
-                        return 'Minimal 6 digit';
-                      }
                       return null;
                     },
                     controller: login.password,
                     labelText: 'Password',
-                    hintText: 'Minimal 6 digit',
+                    hintText: 'Password',
                     isObscure: login.isObscure,
                     maxLines: 1,
                     suffix: GestureDetector(
@@ -102,7 +99,7 @@ class LoginPage extends StatelessWidget {
                     onTap: null,
                   ),
                   orElse: () => CustomButton(
-                    child: const Text('Simpan'),
+                    child: const Text('Masuk'),
                     onTap: () {
                       if (login.key.currentState!.validate()) {
                         login.login();
