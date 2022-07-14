@@ -66,11 +66,6 @@ class AddReminderPage extends StatelessWidget {
 
             ///
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Berapa hari anda atur pengingat ini?',
-                  style: kBodyTextBold),
-            ),
-            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
@@ -85,7 +80,7 @@ class AddReminderPage extends StatelessWidget {
                       builder: (context, state) {
                         return Slider(
                           value: addReminder.day,
-                          max: 50,
+                          max: 180,
                           min: 1,
                           onChanged: (v) {
                             addReminder.setWeek(v);
@@ -104,9 +99,13 @@ class AddReminderPage extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 14),
                                 ),
-                                Text(
-                                  ' ${addReminder.day.round()} hari',
-                                )
+                                (addReminder.day > 7)
+                                    ? Text(
+                                        ' ${addReminder.day.round()} hari (${(addReminder.day / 7).round()}) minggu',
+                                      )
+                                    : Text(
+                                        ' ${addReminder.day.round()} hari',
+                                      )
                               ],
                             )),
                   ),

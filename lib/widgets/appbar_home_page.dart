@@ -73,8 +73,8 @@ class AppBarHomePage extends StatelessWidget {
                                           sharedPreferences.clear();
                                           NotificationService()
                                               .clearNotification();
-                                          Navigator.pushReplacementNamed(
-                                              context, login);
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context, login, (route) => false);
                                         },
                                         child: const Text('Ya, tutup'),
                                       ),
