@@ -26,6 +26,7 @@ class CustomDatePicker extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding ?? 20),
       child: DateTimeField(
+        resetIcon: const Icon(Icons.close),
         format: format,
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
@@ -39,6 +40,7 @@ class CustomDatePicker extends StatelessWidget {
               initialTime:
                   TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
             );
+
             return DateTimeField.combine(date, time);
           } else {
             return currentValue;
@@ -72,14 +74,6 @@ class CustomDatePicker extends StatelessWidget {
           labelText: labelText,
           labelStyle: TextStyle(color: kPrimaryColor),
           hintText: hintText,
-          suffix: GestureDetector(
-            onTap: () {},
-            child: const Padding(
-              padding: EdgeInsets.only(
-                right: 10,
-              ),
-            ),
-          ),
           hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
           filled: true,
           fillColor: const Color(0xffF0F4F4),

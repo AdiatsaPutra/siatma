@@ -23,7 +23,7 @@ class AddReminderCubit extends Cubit<AddReminderState> {
   DateTime? time;
   int? id;
   double day = 1;
-  int? selectedCategory;
+  late int? selectedCategory;
 
   void setWeek(double day) {
     emit(const AddReminderState.loading());

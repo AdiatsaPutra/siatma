@@ -259,16 +259,7 @@ class AddReminderPage extends StatelessWidget {
                           ),
                         );
                       }
-                      if (addReminder.selectedCategory == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Text(
-                              'Tipe pil belum anda pilih',
-                            ),
-                          ),
-                        );
-                      }
+
                       if (int.parse(addReminder.pillTimes.text) == 1 &&
                           int.parse(addReminder.pillConsumption.text) > 0) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -280,9 +271,21 @@ class AddReminderPage extends StatelessWidget {
                           ),
                         );
                       } else {
-                        context
-                            .read<AddReminderCubit>()
-                            .addReminder(context.read<UserCubit>().u);
+                        if (addReminder.selectedCategory == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                'Tipe pil belum anda pilih',
+                              ),
+                            ),
+                          );
+                        }
+                        if (addReminder.selectedCategory != null) {
+                          context
+                              .read<AddReminderCubit>()
+                              .addReminder(context.read<UserCubit>().u);
+                        }
                       }
                     }
                   },
