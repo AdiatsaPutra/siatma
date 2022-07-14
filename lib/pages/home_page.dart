@@ -34,9 +34,6 @@ class _HomePageState extends State<HomePage> {
             ),
             child: BlocBuilder<ReminderCubit, ReminderState>(
               builder: (context, state) => state.maybeWhen(
-                loading: () => const Center(
-                  child: CircularProgressIndicator(),
-                ),
                 error: (e) => Text(e),
                 orElse: () {
                   if (reminder.userPill.isEmpty) {
