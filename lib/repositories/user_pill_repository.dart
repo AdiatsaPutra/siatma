@@ -19,7 +19,7 @@ class UserPillRepository {
         date TEXT,
         time TEXT,
         type INTEGER,
-        isDone BOOLEAN
+        isDone INTEGER
         createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
       """);
@@ -42,10 +42,10 @@ class UserPillRepository {
       final db = await UserPillRepository.db();
       //times a day
       for (var t = 0; t < userPill.timePerDay; t++) {
+        NotificationService()
+            .scheduleNotifications(u, userPill, t * userPill.interval);
         //for how many days
         for (var i = 0; i < userPill.timeLasting; i++) {
-          NotificationService()
-              .scheduleNotifications(u, userPill, t * userPill.interval);
           final data = {
             'name': userPill.name,
             'amount': userPill.amount,
@@ -58,7 +58,7 @@ class UserPillRepository {
               ),
             ),
             'type': userPill.type,
-            'isDone': false
+            'isDone': 0,
           };
           await db.insert('Userpills', data);
           debugPrint(data.toString());
@@ -104,36 +104,25 @@ class UserPillRepository {
   }
 
   static Future<Either<CustomException, void>> updateUserPill(
-      int? id, UserPillRequest userPill) async {
+      int id, UserPill userPill) async {
     try {
       final db = await UserPillRepository.db();
-      for (var t = 0; t < userPill.timePerDay; t++) {
-        //for how many days
-        for (var i = 0; i < userPill.timeLasting; i++) {
-          final data = {
-            'name': userPill.name,
-            'amount': userPill.amount,
-            'date': DateFormat('yyyy-MM-dd').format(
-              userPill.time.add(Duration(days: i)),
-            ),
-            'time': DateFormat('HH:mm').format(
-              userPill.time.add(
-                Duration(hours: t * userPill.interval),
-              ),
-            ),
-            'type': userPill.type,
-            'isDone': false,
-            'createdAt': DateTime.now().toString()
-          };
 
-          final result = await db
-              .update('Userpills', data, where: "id = ?", whereArgs: [id]);
+      final data = {
+        'name': userPill.name,
+        'amount': userPill.amount,
+        'date': userPill.date,
+        'time': userPill.time,
+        'type': userPill.type,
+        'isDone': 1
+      };
 
-          debugPrint(result.toString());
-        }
-      }
+      await db.update('Userpills', data,
+          where: "id = ?", whereArgs: [id]).then((value) => Logger().i(value));
+
       return const Right(null);
     } catch (e) {
+      Logger().i(e);
       return Left(CustomException(e.toString()));
     }
   }

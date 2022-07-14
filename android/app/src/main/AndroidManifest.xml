@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.siatma.si_atma">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="si_atma"
         android:name="${applicationName}"

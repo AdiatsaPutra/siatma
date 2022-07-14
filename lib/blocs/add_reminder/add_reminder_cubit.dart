@@ -20,7 +20,6 @@ class AddReminderCubit extends Cubit<AddReminderState> {
   final pillTimes = TextEditingController();
   final pillConsumption = TextEditingController();
   final key = GlobalKey<FormState>();
-  bool isDone = false;
   DateTime? time;
   int? id;
   double day = 1;
@@ -55,7 +54,7 @@ class AddReminderCubit extends Cubit<AddReminderState> {
         timePerDay: int.parse(pillTimes.text),
         interval: int.parse(pillConsumption.text),
         type: selectedCategory!,
-        isDone: isDone);
+        isDone: 0);
 
     final reminder = await UserPillRepository.createUserPill(u, request);
     reminder.fold(
@@ -73,22 +72,10 @@ class AddReminderCubit extends Cubit<AddReminderState> {
     );
   }
 
-  void editReminder(
-    UserPill userPill,
-  ) async {
+  void editReminder(UserPill userPill, int isDone) async {
     emit(const AddReminderState.loading());
-    final request = UserPillRequest(
-        name: pillName.text,
-        amount: int.parse(pillAmount.text),
-        time: time!,
-        timeLasting: day.toInt(),
-        timePerDay: int.parse(pillTimes.text),
-        interval: int.parse(pillConsumption.text),
-        type: selectedCategory!,
-        isDone: isDone);
-
     final update =
-        await UserPillRepository.updateUserPill(userPill.id, request);
+        await UserPillRepository.updateUserPill(userPill.id!, userPill);
     update.fold(
       (l) => emit(AddReminderState.error(l.message)),
       (r) => emit(const AddReminderState.success()),

@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final reminder = context.read<ReminderCubit>();
     final addReminder = context.read<AddReminderCubit>();
     final user = ModalRoute.of(context)!.settings.arguments as User;
     return Scaffold(
@@ -20,38 +21,57 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          BlocBuilder<ReminderCubit, ReminderState>(
-            builder: (context, state) => state.maybeWhen(
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
+          BlocListener<AddReminderCubit, AddReminderState>(
+            listener: (context, state) => state.maybeWhen(
+              success: () => reminder.getPill(
+                DateFormat('yyyy-MM-dd').format(
+                  DateTime.now(),
+                ),
               ),
-              error: (e) => Text(e),
-              loaded: (p) {
-                if (p.isEmpty) {
-                  return const EmptyReminder();
-                }
-                return Column(
-                  children: [
-                    ...p.map(
-                      (e) {
-                        return TileReminder(
-                          userPill: e,
-                          onTapDelete: () {
-                            addReminder.deleteReminder(e);
-                          },
-                          icon: Icon(addReminder.isDone == false
-                              ? Icons.circle_outlined
-                              : Icons.check_circle),
-                          onTapDone: () {
-                            addReminder.editReminder(e);
-                          },
-                        );
-                      },
-                    )
-                  ],
-                );
+              orElse: () {
+                return null;
               },
-              orElse: () => const SizedBox(),
+            ),
+            child: BlocBuilder<ReminderCubit, ReminderState>(
+              builder: (context, state) => state.maybeWhen(
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                error: (e) => Text(e),
+                loaded: (p) {
+                  if (p.isEmpty) {
+                    return const EmptyReminder();
+                  }
+                  return Column(
+                    children: [
+                      ...p.map(
+                        (e) {
+                          return TileReminder(
+                            userPill: e,
+                            onTapDelete: () {
+                              addReminder.deleteReminder(e);
+                            },
+                            icon: Icon(
+                              e.isDone == 0
+                                  ? Icons.circle_outlined
+                                  : Icons.check_circle,
+                              color: e.isDone == 1
+                                  ? kSecondaryColor
+                                  : Colors.grey[300],
+                            ),
+                            onTapDone: e.isDone == 1
+                                ? null
+                                : () {
+                                    addReminder.editReminder(e, 0);
+                                  },
+                          );
+                        },
+                      )
+                    ],
+                  );
+                },
+                orElse: () => const SizedBox(),
+              ),
             ),
           ),
           const SizedBox(

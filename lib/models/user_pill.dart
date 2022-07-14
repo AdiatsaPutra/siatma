@@ -5,6 +5,7 @@ class UserPill {
   final String date;
   final String time;
   final int type;
+  final int isDone;
 
   UserPill({
     this.id,
@@ -13,6 +14,7 @@ class UserPill {
     required this.date,
     required this.time,
     required this.type,
+    required this.isDone,
   });
 
   factory UserPill.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class UserPill {
       date: json['date'],
       time: json['time'],
       type: json['type'],
+      isDone: json['isDone'],
     );
   }
 }

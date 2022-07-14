@@ -97,30 +97,18 @@ class AddReminderPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: BlocBuilder<AddReminderCubit, AddReminderState>(
-                      builder: (context, state) => addReminder.day.round() > 1
-                          ? Row(
+                        builder: (context, state) => Row(
                               children: [
                                 const Text(
-                                  'I want to set this reminder for',
+                                  'Reminder akan diset selama',
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 14),
                                 ),
                                 Text(
-                                  ' ${addReminder.day.round()} days',
+                                  ' ${addReminder.day.round()} hari',
                                 )
                               ],
-                            )
-                          : Row(
-                              children: [
-                                const Text(
-                                  'I want to set this reminder for',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 14),
-                                ),
-                                Text(' ${addReminder.day.round()} day')
-                              ],
-                            ),
-                    ),
+                            )),
                   ),
                   kSmallVerticalSpacing,
                 ],

@@ -54,18 +54,19 @@ class NotificationService {
   Future<void> scheduleNotifications(
       User user, UserPillRequest userPill, int duration) async {
     try {
-      Logger().i(duration);
-      final timezone = tz.getLocation('Asia/Jakarta');
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-          Random().nextInt(999999),
-          "Hi ${user.name}",
-          "Lets take your ${userPill.name} medicine",
-          tz.TZDateTime.from(userPill.time, timezone)
-              .add(Duration(hours: duration)),
-          platformChannelSpecifics,
-          androidAllowWhileIdle: true,
-          uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime);
+      for (var i = 0; i < userPill.timeLasting; i++) {
+        final timezone = tz.getLocation('Asia/Jakarta');
+        await flutterLocalNotificationsPlugin.zonedSchedule(
+            Random().nextInt(999999),
+            "Hi ${user.name}",
+            "Lets take your ${userPill.name} medicine",
+            tz.TZDateTime.from(userPill.time, timezone)
+                .add(Duration(days: i, hours: duration)),
+            platformChannelSpecifics,
+            androidAllowWhileIdle: true,
+            uiLocalNotificationDateInterpretation:
+                UILocalNotificationDateInterpretation.absoluteTime);
+      }
     } catch (e) {
       Logger().i(e);
     }

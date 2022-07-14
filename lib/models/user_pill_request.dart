@@ -7,7 +7,7 @@ class UserPillRequest {
   final int timePerDay;
   final int interval;
   final int type;
-  final bool isDone;
+  final int isDone;
 
   UserPillRequest(
       {this.id,

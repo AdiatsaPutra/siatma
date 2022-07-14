@@ -2,7 +2,7 @@ part of 'widgets.dart';
 
 class TileReminder extends StatelessWidget {
   final UserPill userPill;
-  final VoidCallback onTapDone;
+  final VoidCallback? onTapDone;
   final Widget icon;
   final VoidCallback onTapDelete;
 
@@ -68,30 +68,59 @@ class TileReminder extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: const Color(0xffE9ECFF),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          'Jumlah pil: ${userPill.amount}',
-                          style: kBodyTextBold.copyWith(color: kPrimaryColor),
+              userPill.isDone == 0
+                  ? Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffE9ECFF),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Text(
+                                'Jumlah pil: ${userPill.amount}',
+                                style: kBodyTextBold.copyWith(
+                                    color: kPrimaryColor),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              )
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffE9ECFF),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Text(
+                                'Sudah diminum',
+                                style: kBodyTextBold.copyWith(
+                                    color: kPrimaryColor),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
             ],
           ),
         ),
