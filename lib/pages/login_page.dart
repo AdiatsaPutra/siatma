@@ -82,7 +82,7 @@ class LoginPage extends StatelessWidget {
                   loaded: (user) {
                     login.name.clear();
                     login.password.clear();
-                    Navigator.pushNamed(
+                    Navigator.pushReplacementNamed(
                       context,
                       mainPage,
                       arguments: user,

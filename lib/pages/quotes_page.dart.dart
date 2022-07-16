@@ -5,6 +5,7 @@ class QuotesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var randomNumber = Random().nextInt(9);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quotes Kesehatan'),
@@ -57,38 +58,39 @@ class QuotesPage extends StatelessWidget {
               ),
             ),
           ),
-          ...quotes.map(
-            (e) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/healthcare.png',
-                      width: 30,
+          ...quotes.where((element) => element.id == randomNumber).map(
+                (e) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/healthcare.png',
+                          width: 30,
+                        ),
+                        kBigHorizontalSpacing,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 120,
+                          child: Text(e.quote, style: kBodyText),
+                        )
+                      ],
                     ),
-                    kBigHorizontalSpacing,
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width - 120,
-                      child: Text(e.quote, style: kBodyText),
-                    )
-                  ],
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 2,
+                            spreadRadius: 3,
+                            color: Colors.grey[300]!,
+                          ),
+                        ]),
+                  ),
                 ),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 2,
-                        spreadRadius: 3,
-                        color: Colors.grey[300]!,
-                      ),
-                    ]),
-              ),
-            ),
-          )
+              )
         ],
       ),
     );

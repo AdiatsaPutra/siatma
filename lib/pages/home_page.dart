@@ -12,6 +12,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final reminder = context.read<ReminderCubit>();
     final addReminder = context.read<AddReminderCubit>();
+    var randomNumber = Random().nextInt(9);
     final user = ModalRoute.of(context)!.settings.arguments as User;
     return Scaffold(
       appBar: PreferredSize(
@@ -46,7 +47,45 @@ class _HomePageState extends State<HomePage> {
                           return TileReminder(
                             userPill: e,
                             onTapDelete: () {
-                              addReminder.deleteReminder(e);
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Anda yakin akan menghapus pengingat ini?',
+                                          style: kBodyText,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: OutlinedButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text('Batal'),
+                                              ),
+                                            ),
+                                            kBigHorizontalSpacing,
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  addReminder.deleteReminder(e);
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text('Ok'),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
                             },
                             icon: Icon(
                               e.isDone == 0
@@ -59,7 +98,102 @@ class _HomePageState extends State<HomePage> {
                             onTapDone: e.isDone == 1
                                 ? null
                                 : () {
-                                    addReminder.editReminder(e, 0);
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => Dialog(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                'Anda yakin akan check pengingat ini?',
+                                                style: kBodyText,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: OutlinedButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child:
+                                                          const Text('Batal'),
+                                                    ),
+                                                  ),
+                                                  kBigHorizontalSpacing,
+                                                  Expanded(
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        addReminder
+                                                            .editReminder(
+                                                          e,
+                                                          0,
+                                                        );
+                                                        Navigator.pop(context);
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) =>
+                                                              Dialog(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  ...quotes
+                                                                      .where((element) =>
+                                                                          element
+                                                                              .id ==
+                                                                          randomNumber)
+                                                                      .map(
+                                                                        (e) =>
+                                                                            Text(
+                                                                          e.quote,
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                20,
+                                                                          ),
+                                                                          textAlign:
+                                                                              TextAlign.center,
+                                                                        ),
+                                                                      ),
+                                                                  SizedBox(
+                                                                    width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width,
+                                                                    child:
+                                                                        ElevatedButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      child: const Text(
+                                                                          'Ok'),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: const Text('Ok'),
+                                                    ),
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
                                   },
                           );
                         },
