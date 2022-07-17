@@ -29,7 +29,7 @@ class SplashPage extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  'assets/splash_image.png',
+                  'assets/logo.png',
                 ),
               ),
             ),

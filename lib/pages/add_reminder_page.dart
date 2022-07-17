@@ -7,7 +7,7 @@ class AddReminderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final addReminder = context.read<AddReminderCubit>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Tambah pil')),
+      appBar: AppBar(title: const Text('Tambah obat')),
       body: Form(
         key: addReminder.key,
         child: ListView(
@@ -18,13 +18,13 @@ class AddReminderPage extends StatelessWidget {
             CustomTextField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Nama pil wajib diisi';
+                  return 'Nama obat wajib diisi';
                 }
                 return null;
               },
               controller: addReminder.pillName,
-              labelText: 'Nama pil',
-              hintText: 'contoh: Pil KB',
+              labelText: 'Nama obat',
+              hintText: 'contoh: Isoniazid',
             ),
             kMediumVerticalSpacing,
 
@@ -32,12 +32,12 @@ class AddReminderPage extends StatelessWidget {
             CustomTextField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Jumlah pil wajib diisi';
+                    return 'Jumlah obat wajib diisi';
                   }
                   return null;
                 },
                 controller: addReminder.pillAmount,
-                labelText: 'Jumlah pil',
+                labelText: 'Jumlah obat',
                 hintText: '1',
                 keyboardType: TextInputType.number),
             kMediumVerticalSpacing,
@@ -275,7 +275,7 @@ class AddReminderPage extends StatelessWidget {
                             const SnackBar(
                               backgroundColor: Colors.red,
                               content: Text(
-                                'Tipe pil belum anda pilih',
+                                'Tipe obat belum anda pilih',
                               ),
                             ),
                           );
