@@ -24,6 +24,7 @@ class AddReminderCubit extends Cubit<AddReminderState> {
   int? id;
   double day = 1;
   late int? selectedCategory;
+  late int selectedRingtone = 1;
 
   void setWeek(double day) {
     emit(const AddReminderState.loading());
@@ -34,6 +35,12 @@ class AddReminderCubit extends Cubit<AddReminderState> {
   void setCategory(int category) {
     emit(const AddReminderState.loading());
     selectedCategory = category;
+    emit(const AddReminderState.loaded());
+  }
+
+  void setRingtone(int ringtone) {
+    emit(const AddReminderState.loading());
+    selectedRingtone = ringtone;
     emit(const AddReminderState.loaded());
   }
 

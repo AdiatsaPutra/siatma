@@ -10,6 +10,7 @@ class AppBarHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final addRingtone = context.read<AddReminderCubit>();
     final userPill = context.read<ReminderCubit>();
     return Scaffold(
         body: Column(
@@ -45,53 +46,75 @@ class AppBarHomePage extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) => Dialog(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
+                          child: SizedBox(
+                            width: 50,
+                            child: ListView(
+                              scrollDirection: Axis.vertical,
                               children: [
-                                const Text('Anda yakin akan tutup aplikasi??'),
                                 kBigVerticalSpacing,
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: OutlinedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
+                                ...List.generate(
+                                  5,
+                                  (index) => BlocBuilder<AddReminderCubit,
+                                      AddReminderState>(
+                                    builder: (context, state) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          addRingtone.setRingtone(index);
+                                          FlutterRingtonePlayer.play(
+                                              fromAsset: buildRingtone(
+                                                  context, index));
+                                          context.read<AddReminderCubit>();
                                         },
-                                        child: const Text('Jangan'),
-                                      ),
-                                    ),
-                                    kBigHorizontalSpacing,
-                                    Expanded(
-                                      child: ElevatedButton(
-                                        onPressed: () async {
-                                          final SharedPreferences
-                                              sharedPreferences =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          sharedPreferences.clear();
-                                          NotificationService()
-                                              .clearNotification();
-                                          Navigator.pushNamedAndRemoveUntil(
-                                              context, login, (route) => false);
-                                        },
-                                        child: const Text('Ya, tutup'),
-                                      ),
-                                    ),
-                                  ],
-                                )
+                                        child: Container(
+                                          width: 20,
+                                          child: Column(children: [
+                                            kBigVerticalSpacing,
+                                            Text(
+                                              buildRingtoneName(context, index),
+                                              style: kSmallTextBold,
+                                            ),
+                                            Text(
+                                              buildRingtonSelection(
+                                                  context, index),
+                                              style: kSmallTextBold,
+                                            ),
+                                          ]),
+                                          margin:
+                                              const EdgeInsets.only(bottom: 20),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: addRingtone
+                                                          .selectedRingtone ==
+                                                      index
+                                                  ? Border.all(
+                                                      color: kPrimaryColor,
+                                                      width: 2)
+                                                  : null,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 1,
+                                                  spreadRadius: 3,
+                                                  color: Colors.grey[200]!,
+                                                )
+                                              ]),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                         ),
                       );
                     },
-                    child: Text(
-                      'Keluar',
-                      style: kSmallText.copyWith(color: Colors.white),
+                    child: const Icon(
+                      Icons.more_vert,
+                      color: Colors.white,
                     ),
-                  ),
+                  )
                 ],
               ),
               kSmallestVerticalSpacing,
@@ -122,5 +145,56 @@ class AppBarHomePage extends StatelessWidget {
         ),
       ],
     ));
+  }
+}
+
+buildRingtone(BuildContext context, int index) {
+  switch (index) {
+    case 0:
+      return 'assets/birds.mp3';
+    case 1:
+      return 'assets/cat_purring.mp3';
+    case 2:
+      return 'assets/koo_koo.mp3';
+    case 3:
+      return 'assets/lion_roar.mp3';
+    case 4:
+      return 'assets/water_flow.mp3';
+    default:
+      return '';
+  }
+}
+
+buildRingtonSelection(BuildContext context, int index) {
+  switch (index) {
+    case 0:
+      return 'birds';
+    case 1:
+      return 'cat_purring';
+    case 2:
+      return 'koo_koo';
+    case 3:
+      return 'lion_roar';
+    case 4:
+      return 'water_flow';
+    default:
+      return '';
+  }
+}
+
+String buildRingtoneName(BuildContext context, int index) {
+  switch (index) {
+    case 0:
+      return 'Burung';
+    case 1:
+      return 'Kucing';
+    case 2:
+      return 'Burung Koo Koo';
+    case 3:
+      return 'Singa';
+    case 4:
+      return 'Air';
+    default:
+      return '';
   }
 }

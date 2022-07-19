@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 Color kPrimaryColor = const Color(0xff3152FF);

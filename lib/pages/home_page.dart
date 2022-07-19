@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                                                                             Text(
                                                                           e.quote,
                                                                           style:
-                                                                              TextStyle(
+                                                                              const TextStyle(
                                                                             fontSize:
                                                                                 20,
                                                                           ),

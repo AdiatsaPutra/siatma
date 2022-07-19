@@ -37,22 +37,28 @@ class NotificationService {
     );
   }
 
+  static final String sound = 'birds';
   Future selectNotification(BuildContext context, String payload) async {
     await Navigator.pushReplacementNamed(context, mainPage);
   }
 
-  NotificationDetails platformChannelSpecifics = const NotificationDetails(
+  NotificationDetails platformChannelSpecifics = NotificationDetails(
     android: AndroidNotificationDetails(
       'channel ID',
       'channel name',
-      playSound: true,
+      //playSound: true,
       priority: Priority.high,
       importance: Importance.high,
+      sound: RawResourceAndroidNotificationSound(sound),
+      enableVibration: false,
     ),
   );
 
   Future<void> scheduleNotifications(
-      User user, UserPillRequest userPill, int duration) async {
+    User user,
+    UserPillRequest userPill,
+    int duration,
+  ) async {
     try {
       for (var i = 0; i < userPill.timeLasting; i++) {
         final timezone = tz.getLocation('Asia/Jakarta');

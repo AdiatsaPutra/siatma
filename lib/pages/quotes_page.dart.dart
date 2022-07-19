@@ -9,6 +9,60 @@ class QuotesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quotes Kesehatan'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: GestureDetector(
+              onTap: () async {
+                showDialog(
+                  context: context,
+                  builder: (context) => Dialog(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text('Anda yakin akan tutup aplikasi??'),
+                          kBigVerticalSpacing,
+                          Row(
+                            children: [
+                              Expanded(
+                                child: OutlinedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Jangan'),
+                                ),
+                              ),
+                              kBigHorizontalSpacing,
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    final SharedPreferences sharedPreferences =
+                                        await SharedPreferences.getInstance();
+                                    sharedPreferences.clear();
+                                    NotificationService().clearNotification();
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, login, (route) => false);
+                                  },
+                                  child: const Text('Ya, tutup'),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+              child: Text(
+                'Keluar',
+                style: kSmallText.copyWith(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
       ),
       backgroundColor: Colors.white,
       body: ListView(
@@ -90,7 +144,7 @@ class QuotesPage extends StatelessWidget {
                         ]),
                   ),
                 ),
-              )
+              ),
         ],
       ),
     );
