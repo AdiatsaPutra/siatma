@@ -42,7 +42,7 @@ class UserPillRepository {
       final db = await UserPillRepository.db();
       //times a day
       for (var t = 0; t < userPill.timePerDay; t++) {
-        NotificationService()
+        NotificationService('birds')
             .scheduleNotifications(u, userPill, t * userPill.interval);
         //for how many days
         for (var i = 0; i < userPill.timeLasting; i++) {

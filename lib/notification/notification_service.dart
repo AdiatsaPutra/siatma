@@ -11,12 +11,16 @@ import 'package:si_atma/constants/routes.dart';
 import '../models/user.dart';
 
 class NotificationService {
-  static final NotificationService _notificationService =
-      NotificationService._internal();
-  factory NotificationService() {
-    return _notificationService;
-  }
+  late String name;
+
+  static final NotificationService _inst = NotificationService._internal();
+
   NotificationService._internal();
+
+  factory NotificationService(String name) {
+    _inst.name = name;
+    return _inst;
+  }
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -37,7 +41,6 @@ class NotificationService {
     );
   }
 
-  static final String sound = 'birds';
   Future selectNotification(BuildContext context, String payload) async {
     await Navigator.pushReplacementNamed(context, mainPage);
   }
@@ -49,7 +52,7 @@ class NotificationService {
       //playSound: true,
       priority: Priority.high,
       importance: Importance.high,
-      sound: RawResourceAndroidNotificationSound(sound),
+      sound: RawResourceAndroidNotificationSound(_inst.name),
       enableVibration: false,
     ),
   );
@@ -86,3 +89,19 @@ class NotificationService {
     }
   }
 }
+// class NotificationService {
+
+//   late String notification;
+
+//   static final NotificationService _notificationService =
+//       NotificationService._internal();
+
+//   factory NotificationService({String notification = ''}) {
+//     _notificationService.notification = notification;
+//     return _notificationService;
+//   }
+
+//   
+
+//   
+// }

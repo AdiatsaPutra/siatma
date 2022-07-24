@@ -46,66 +46,74 @@ class AppBarHomePage extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) => Dialog(
-                          child: SizedBox(
-                            width: 50,
-                            child: ListView(
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                kBigVerticalSpacing,
-                                ...List.generate(
-                                  5,
-                                  (index) => BlocBuilder<AddReminderCubit,
-                                      AddReminderState>(
-                                    builder: (context, state) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          addRingtone.setRingtone(index);
-                                          FlutterRingtonePlayer.play(
-                                              fromAsset: buildRingtone(
-                                                  context, index));
-                                          context.read<AddReminderCubit>();
-                                        },
-                                        child: Container(
-                                          width: 20,
-                                          child: Column(children: [
-                                            kBigVerticalSpacing,
-                                            Text(
+                          insetPadding: const EdgeInsets.all(20),
+                          child: ListView(
+                            scrollDirection: Axis.vertical,
+                            children: [
+                              kBigVerticalSpacing,
+                              const Center(
+                                child: Text('Pilih Suara'),
+                              ),
+                              kBigVerticalSpacing,
+                              ...List.generate(
+                                5,
+                                (index) => BlocBuilder<AddReminderCubit,
+                                    AddReminderState>(
+                                  builder: (context, state) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        addRingtone.setRingtone(index);
+                                        FlutterRingtonePlayer.play(
+                                            fromAsset:
+                                                buildRingtone(context, index));
+                                        context.read<AddReminderCubit>();
+                                      },
+                                      child: Container(
+                                        width: 20,
+                                        child: Column(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
                                               buildRingtoneName(context, index),
                                               style: kSmallTextBold,
                                             ),
-                                            Text(
-                                              buildRingtonSelection(
-                                                  context, index),
-                                              style: kSmallTextBold,
-                                            ),
-                                          ]),
-                                          margin:
-                                              const EdgeInsets.only(bottom: 20),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              border: addRingtone
-                                                          .selectedRingtone ==
-                                                      index
-                                                  ? Border.all(
-                                                      color: kPrimaryColor,
-                                                      width: 2)
-                                                  : null,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  blurRadius: 1,
-                                                  spreadRadius: 3,
-                                                  color: Colors.grey[200]!,
-                                                )
-                                              ]),
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                          ),
+                                        ]),
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 10),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            border:
+                                                addRingtone.selectedRingtone ==
+                                                        index
+                                                    ? Border.all(
+                                                        color: kPrimaryColor,
+                                                        width: 2)
+                                                    : null,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 1,
+                                                spreadRadius: 3,
+                                                color: Colors.grey[200]!,
+                                              )
+                                            ]),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ],
-                            ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Ok'),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       );
@@ -160,23 +168,6 @@ buildRingtone(BuildContext context, int index) {
       return 'assets/lion_roar.mp3';
     case 4:
       return 'assets/water_flow.mp3';
-    default:
-      return '';
-  }
-}
-
-buildRingtonSelection(BuildContext context, int index) {
-  switch (index) {
-    case 0:
-      return 'birds';
-    case 1:
-      return 'cat_purring';
-    case 2:
-      return 'koo_koo';
-    case 3:
-      return 'lion_roar';
-    case 4:
-      return 'water_flow';
     default:
       return '';
   }

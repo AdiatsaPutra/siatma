@@ -41,11 +41,12 @@ class QuotesPage extends StatelessWidget {
                                     final SharedPreferences sharedPreferences =
                                         await SharedPreferences.getInstance();
                                     sharedPreferences.clear();
-                                    NotificationService().clearNotification();
+                                    NotificationService('birds')
+                                        .clearNotification();
                                     Navigator.pushNamedAndRemoveUntil(
                                         context, login, (route) => false);
                                   },
-                                  child: const Text('Ya, tutup'),
+                                  child: const Text('Ya tutup'),
                                 ),
                               ),
                             ],
