@@ -67,6 +67,7 @@ class UserPillRepository {
 
       return const Right(null);
     } catch (e) {
+      Logger().e(e);
       return Left(CustomException(e.toString()));
     }
   }

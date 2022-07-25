@@ -11,15 +11,16 @@ import 'package:si_atma/constants/routes.dart';
 import '../models/user.dart';
 
 class NotificationService {
-  late String name;
+  String name = 'birds';
 
-  static final NotificationService _inst = NotificationService._internal();
+  static NotificationService? instance;
 
-  NotificationService._internal();
+  NotificationService._internal(String name);
 
   factory NotificationService(String name) {
-    _inst.name = name;
-    return _inst;
+    var inst = NotificationService._internal(name);
+    instance = inst;
+    return inst;
   }
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -49,10 +50,10 @@ class NotificationService {
     android: AndroidNotificationDetails(
       'channel ID',
       'channel name',
-      //playSound: true,
+      playSound: true,
       priority: Priority.high,
       importance: Importance.high,
-      sound: RawResourceAndroidNotificationSound(_inst.name),
+      sound: RawResourceAndroidNotificationSound('birds.mp3'),
       enableVibration: false,
     ),
   );
