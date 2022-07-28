@@ -9,6 +9,7 @@ environment:
   sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
+  android_alarm_manager_plus: ^2.0.6
   build_runner: ^2.1.11
   calendar_timeline: ^1.0.4
   cupertino_icons: ^1.0.2
