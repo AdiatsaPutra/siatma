@@ -53,7 +53,7 @@ class NotificationService {
       playSound: true,
       priority: Priority.high,
       importance: Importance.high,
-      sound: RawResourceAndroidNotificationSound('birds.mp3'),
+      sound: RawResourceAndroidNotificationSound('birds'),
       enableVibration: false,
     ),
   );
