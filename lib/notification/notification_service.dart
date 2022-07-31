@@ -16,6 +16,7 @@ import 'package:si_atma/constants/routes.dart';
 import '../models/user.dart';
 
 class NotificationService {
+  bool played = true;
   static NotificationService? instance;
 
   NotificationService._internal(String name);
@@ -72,13 +73,23 @@ class NotificationService {
     // Get the previous cached count and increment it.
     final prefs = await SharedPreferences.getInstance();
     final currentCount = prefs.getInt(countKey) ?? 0;
-    await prefs.setInt(countKey, currentCount + 1);
+    final newCount = currentCount + 1;
+    await prefs.setInt(countKey, newCount);
 
-    FlutterRingtonePlayer.play(fromAsset: 'assets/birds.mp3');
+    currentCount <= newCount
+        ? FlutterRingtonePlayer.play(fromAsset: 'assets/birds.mp3')
+        : FlutterRingtonePlayer.stop();
+
+    ReceivePort receiver = ReceivePort();
 
     // This will be null if we're running in the background.
     uiSendPort ??= IsolateNameServer.lookupPortByName(isolateName);
-    uiSendPort?.send(null);
+    uiSendPort?.send('stop');
+    receiver.listen((message) async {
+      if (message == "stop") {
+        await FlutterRingtonePlayer.stop();
+      }
+    });
   }
 
   Future<void> scheduleNotifications(
