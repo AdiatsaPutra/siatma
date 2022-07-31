@@ -47,73 +47,78 @@ class AppBarHomePage extends StatelessWidget {
                         context: context,
                         builder: (context) => Dialog(
                           insetPadding: const EdgeInsets.all(20),
-                          child: ListView(
-                            scrollDirection: Axis.vertical,
-                            children: [
-                              kBigVerticalSpacing,
-                              const Center(
-                                child: Text('Pilih Suara'),
-                              ),
-                              kBigVerticalSpacing,
-                              ...List.generate(
-                                5,
-                                (index) => BlocBuilder<AddReminderCubit,
-                                    AddReminderState>(
-                                  builder: (context, state) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        addRingtone.setRingtone(index);
-                                        FlutterRingtonePlayer.play(
-                                            fromAsset:
-                                                buildRingtone(context, index));
-                                        context.read<AddReminderCubit>();
-                                      },
-                                      child: Container(
-                                        width: 20,
-                                        child: Column(children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              buildRingtoneName(context, index),
-                                              style: kSmallTextBold,
+                          child: SizedBox(
+                            height: 400,
+                            child: ListView(
+                              scrollDirection: Axis.vertical,
+                              children: [
+                                kBigVerticalSpacing,
+                                const Center(
+                                  child: Text('Pilih Suara'),
+                                ),
+                                kBigVerticalSpacing,
+                                ...List.generate(
+                                  5,
+                                  (index) => BlocBuilder<AddReminderCubit,
+                                      AddReminderState>(
+                                    builder: (context, state) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          addRingtone.setRingtone(index);
+                                          FlutterRingtonePlayer.play(
+                                              fromAsset: buildRingtone(
+                                                  context, index));
+                                          context.read<AddReminderCubit>();
+                                        },
+                                        child: Container(
+                                          width: 20,
+                                          child: Column(children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                buildRingtoneName(
+                                                    context, index),
+                                                style: kSmallTextBold,
+                                              ),
                                             ),
-                                          ),
-                                        ]),
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border:
-                                                addRingtone.selectedRingtone ==
-                                                        index
-                                                    ? Border.all(
-                                                        color: kPrimaryColor,
-                                                        width: 2)
-                                                    : null,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 1,
-                                                spreadRadius: 3,
-                                                color: Colors.grey[200]!,
-                                              )
-                                            ]),
-                                      ),
-                                    );
-                                  },
+                                          ]),
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 10),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: addRingtone
+                                                          .selectedRingtone ==
+                                                      index
+                                                  ? Border.all(
+                                                      color: kPrimaryColor,
+                                                      width: 2)
+                                                  : null,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 1,
+                                                  spreadRadius: 3,
+                                                  color: Colors.grey[200]!,
+                                                )
+                                              ]),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text('Ok'),
+                                Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Ok'),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );
